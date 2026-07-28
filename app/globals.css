@@ -87,6 +87,12 @@ img {
   -webkit-text-fill-color: transparent;
 }
 
+.hero-text-pressure {
+  width: 100%;
+  height: clamp(4.8rem, 13vw, 13.5rem);
+  overflow: hidden;
+}
+
 .contact-button,
 .live-project-button {
   display: inline-flex;
@@ -263,6 +269,10 @@ nav button:focus-visible {
     font-size: 11.3vw;
   }
 
+  .hero-text-pressure {
+    height: clamp(3rem, 16vw, 5rem);
+  }
+
   .hero-portrait {
     top: 48%;
     width: min(64vw, 42vh);
@@ -304,6 +314,10 @@ nav button:focus-visible {
 
   .hero-display-heading {
     font-size: min(11.3vw, 25vh);
+  }
+
+  .hero-text-pressure {
+    height: min(13vw, 27vh);
   }
 
   .hero-portrait {

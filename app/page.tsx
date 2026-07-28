@@ -17,6 +17,7 @@ import {
 } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import InlineContactLanyard from "@/components/ContactExperience/InlineContactLanyard";
+import TextPressure from "@/components/TextPressure/TextPressure";
 
 const CONTACT_EMAIL = "hello@changjunli.design";
 
@@ -293,14 +294,21 @@ function HeroSection({
 
       <div className="hero-heading-wrap mt-6 overflow-hidden sm:mt-4 md:-mt-5">
         <FadeIn delay={0.15} y={40}>
-          <h1
-            className="hero-display-heading hero-heading w-full whitespace-nowrap text-[clamp(1.65rem,11.3vw,11rem)] font-black uppercase leading-none tracking-[-0.08em]"
-            aria-label="Hi, I'm Changjun Li"
-          >
-            Hi, I&apos;m
-            <span className="inline-block w-[0.2em]" aria-hidden="true" />
-            Changjun Li
-          </h1>
+          <div className="hero-text-pressure">
+            <TextPressure
+              text="Hi, I'm Changjun Li"
+              ariaLabel="Hi, I'm Changjun Li"
+              flex
+              alpha={false}
+              stroke={false}
+              width
+              weight
+              italic={false}
+              scale={false}
+              textColor="#AAB8C2"
+              minFontSize={28}
+            />
+          </div>
         </FadeIn>
       </div>
 

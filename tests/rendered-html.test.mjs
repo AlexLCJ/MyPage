@@ -32,7 +32,10 @@ test("server-renders the finished portfolio", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Changjun Li -- 3D Creator<\/title>/i);
-  assert.match(html, /Hi, I(?:&#x27;|&apos;|')m Changjun Li/i);
+  assert.match(
+    html,
+    /aria-label="Hi, I(?:&#x27;|&apos;|')m Changjun Li"/i,
+  );
   assert.match(html, /About Me/i);
   assert.match(html, /Services/i);
   assert.match(html, /Nextlevel Studio/i);
@@ -60,6 +63,7 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   assert.match(page, /function ServicesSection/);
   assert.match(page, /function ProjectsSection/);
   assert.match(page, /InlineContactLanyard/);
+  assert.match(page, /TextPressure/);
   assert.match(page, /aria-expanded=/);
   assert.match(layout, /Changjun Li -- 3D Creator/);
   assert.match(globals, /@layer base/);
