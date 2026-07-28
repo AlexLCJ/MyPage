@@ -91,7 +91,9 @@ img {
   display: flex;
   width: 100%;
   flex-direction: column;
+  align-items: flex-start;
   gap: clamp(0.1rem, 0.5vw, 0.45rem);
+  padding-inline: clamp(1.5rem, 2.8vw, 2.5rem);
 }
 
 .hero-text-pressure {
@@ -100,18 +102,15 @@ img {
 }
 
 .hero-text-pressure-intro {
-  width: min(60vw, 54rem);
-  margin-left: clamp(1rem, 3vw, 3rem);
+  width: min(46vw, 42rem);
 }
 
-.hero-text-pressure-intro .hero-text-pressure-intro-title {
+.hero-text-pressure-stack .hero-text-pressure-line-title {
   text-align: left;
 }
 
 .hero-text-pressure-name {
-  width: min(90vw, 81rem);
-  margin-right: clamp(1rem, 3vw, 3rem);
-  margin-left: auto;
+  width: min(68vw, 62rem);
 }
 
 .contact-button,
@@ -294,14 +293,16 @@ nav button:focus-visible {
     height: clamp(2.75rem, 14vw, 4.5rem);
   }
 
+  .hero-text-pressure-stack {
+    padding-inline: 1rem;
+  }
+
   .hero-text-pressure-intro {
     width: 62vw;
-    margin-left: 1rem;
   }
 
   .hero-text-pressure-name {
     width: calc(100vw - 2rem);
-    margin-right: 1rem;
   }
 
   .hero-portrait {

@@ -309,7 +309,7 @@ function HeroSection({
                 italic={false}
                 scale={false}
                 textColor="#AAB8C2"
-                className="hero-text-pressure-intro-title"
+                className="hero-text-pressure-line-title"
                 minFontSize={28}
               />
             </div>
@@ -318,7 +318,7 @@ function HeroSection({
                 as="div"
                 text="Changjun Li"
                 ariaHidden
-                flex
+                flex={false}
                 alpha={false}
                 stroke={false}
                 width
@@ -328,6 +328,7 @@ function HeroSection({
                 italic={false}
                 scale={false}
                 textColor="#AAB8C2"
+                className="hero-text-pressure-line-title"
                 minFontSize={28}
               />
             </div>
