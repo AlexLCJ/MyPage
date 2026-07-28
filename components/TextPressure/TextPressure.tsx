@@ -17,6 +17,7 @@ type Point = {
 
 type TextPressureProps = {
   text?: string;
+  as?: "h1" | "div";
   fontFamily?: string;
   fontUrl?: string;
   width?: boolean;
@@ -31,6 +32,7 @@ type TextPressureProps = {
   className?: string;
   minFontSize?: number;
   ariaLabel?: string;
+  ariaHidden?: boolean;
 };
 
 const distanceBetween = (a: Point, b: Point) => {
@@ -55,6 +57,7 @@ const getAttributeValue = (
 
 export default function TextPressure({
   text = "Compressa",
+  as = "h1",
   fontFamily = "Roboto Flex",
   fontUrl = "https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap",
   width = true,
@@ -69,6 +72,7 @@ export default function TextPressure({
   className = "",
   minFontSize = 24,
   ariaLabel,
+  ariaHidden = false,
 }: TextPressureProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -105,9 +109,11 @@ export default function TextPressure({
 
     const { width: containerWidth, height: containerHeight } =
       container.getBoundingClientRect();
+    const widthFittedFontSize =
+      containerWidth / Math.max(characters.length / 2, 1);
     const nextFontSize = Math.max(
-      containerWidth / Math.max(characters.length / 2, 1),
-      minFontSize,
+      Math.min(widthFittedFontSize, containerHeight),
+      Math.min(minFontSize, containerHeight),
     );
 
     setFontSize(nextFontSize);
@@ -283,6 +289,19 @@ export default function TextPressure({
     "--text-pressure-size": `${fontSize}px`,
     "--text-pressure-stroke-color": strokeColor,
   } as CSSProperties;
+  const renderedCharacters = characters.map((character, index) => (
+    <span
+      key={`${character}-${index}`}
+      ref={(element) => {
+        characterRefs.current[index] = element;
+      }}
+      className={styles.character}
+      data-char={character}
+      aria-hidden="true"
+    >
+      {character === " " ? "\u00a0" : character}
+    </span>
+  ));
 
   return (
     <div
@@ -291,25 +310,27 @@ export default function TextPressure({
       style={customProperties}
     >
       {fontImport}
-      <h1
-        ref={titleRef}
-        className={titleClassName}
-        aria-label={ariaLabel ?? text}
-      >
-        {characters.map((character, index) => (
-          <span
-            key={`${character}-${index}`}
-            ref={(element) => {
-              characterRefs.current[index] = element;
-            }}
-            className={styles.character}
-            data-char={character}
-            aria-hidden="true"
-          >
-            {character === " " ? "\u00a0" : character}
-          </span>
-        ))}
-      </h1>
+      {as === "h1" ? (
+        <h1
+          ref={(element) => {
+            titleRef.current = element;
+          }}
+          className={titleClassName}
+          aria-label={ariaLabel ?? text}
+        >
+          {renderedCharacters}
+        </h1>
+      ) : (
+        <div
+          ref={(element) => {
+            titleRef.current = element;
+          }}
+          className={titleClassName}
+          aria-hidden={ariaHidden}
+        >
+          {renderedCharacters}
+        </div>
+      )}
     </div>
   );
 }

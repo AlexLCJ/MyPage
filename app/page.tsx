@@ -294,20 +294,38 @@ function HeroSection({
 
       <div className="hero-heading-wrap mt-6 overflow-hidden sm:mt-4 md:-mt-5">
         <FadeIn delay={0.15} y={40}>
-          <div className="hero-text-pressure">
-            <TextPressure
-              text="Hi, I'm Changjun Li"
-              ariaLabel="Hi, I'm Changjun Li"
-              flex
-              alpha={false}
-              stroke={false}
-              width
-              weight
-              italic={false}
-              scale={false}
-              textColor="#AAB8C2"
-              minFontSize={28}
-            />
+          <div className="hero-text-pressure-stack">
+            <div className="hero-text-pressure hero-text-pressure-intro">
+              <TextPressure
+                text="Hi, I'm"
+                ariaLabel="Hi, I'm Changjun Li"
+                flex={false}
+                alpha={false}
+                stroke={false}
+                width
+                weight
+                italic={false}
+                scale={false}
+                textColor="#AAB8C2"
+                minFontSize={28}
+              />
+            </div>
+            <div className="hero-text-pressure hero-text-pressure-name">
+              <TextPressure
+                as="div"
+                text="Changjun Li"
+                ariaHidden
+                flex
+                alpha={false}
+                stroke={false}
+                width
+                weight
+                italic={false}
+                scale={false}
+                textColor="#AAB8C2"
+                minFontSize={28}
+              />
+            </div>
           </div>
         </FadeIn>
       </div>

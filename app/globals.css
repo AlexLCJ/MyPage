@@ -87,10 +87,27 @@ img {
   -webkit-text-fill-color: transparent;
 }
 
-.hero-text-pressure {
+.hero-text-pressure-stack {
+  display: flex;
   width: 100%;
-  height: clamp(4.8rem, 13vw, 13.5rem);
+  flex-direction: column;
+  gap: clamp(0.1rem, 0.5vw, 0.45rem);
+}
+
+.hero-text-pressure {
+  height: clamp(4.5rem, 9.5vw, 8.75rem);
   overflow: hidden;
+}
+
+.hero-text-pressure-intro {
+  width: min(60vw, 54rem);
+  margin-left: clamp(1rem, 3vw, 3rem);
+}
+
+.hero-text-pressure-name {
+  width: min(90vw, 81rem);
+  margin-right: clamp(1rem, 3vw, 3rem);
+  margin-left: auto;
 }
 
 .contact-button,
@@ -270,7 +287,17 @@ nav button:focus-visible {
   }
 
   .hero-text-pressure {
-    height: clamp(3rem, 16vw, 5rem);
+    height: clamp(2.75rem, 14vw, 4.5rem);
+  }
+
+  .hero-text-pressure-intro {
+    width: 62vw;
+    margin-left: 1rem;
+  }
+
+  .hero-text-pressure-name {
+    width: calc(100vw - 2rem);
+    margin-right: 1rem;
   }
 
   .hero-portrait {
@@ -317,7 +344,7 @@ nav button:focus-visible {
   }
 
   .hero-text-pressure {
-    height: min(13vw, 27vh);
+    height: min(9vw, 20vh);
   }
 
   .hero-portrait {
