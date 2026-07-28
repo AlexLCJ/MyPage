@@ -323,8 +323,8 @@ function HeroSection({
                 stroke={false}
                 width
                 weight
-                minWeight={200}
-                maxWeight={950}
+                minWeight={320}
+                maxWeight={1000}
                 italic={false}
                 scale={false}
                 textColor="#AAB8C2"
