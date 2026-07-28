@@ -694,7 +694,7 @@ function ProjectsSection() {
 }
 
 export default function Home() {
-  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(true);
 
   return (
     <main className="site-shell overflow-x-clip bg-[#0C0C0C]">

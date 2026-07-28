@@ -67,6 +67,7 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   assert.match(page, /function ServicesSection/);
   assert.match(page, /function ProjectsSection/);
   assert.match(page, /InlineContactLanyard/);
+  assert.match(page, /useState\(true\)/);
   assert.match(page, /TextPressure/);
   assert.match(page, /GradientText/);
   assert.doesNotMatch(page, /FallingText/);
