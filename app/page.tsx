@@ -5,6 +5,7 @@ import {
   type ElementType,
   type MouseEvent,
   type ReactNode,
+  Fragment,
   useEffect,
   useRef,
   useState,
@@ -244,11 +245,11 @@ function HeroSection() {
   return (
     <section
       id="top"
-      className="relative flex h-screen min-h-[620px] flex-col overflow-x-clip bg-[#0C0C0C]"
+      className="hero-section relative flex h-screen min-h-[620px] flex-col overflow-x-clip bg-[#0C0C0C]"
     >
       <FadeIn
         as="nav"
-        className="relative z-30 flex justify-between px-6 pt-6 text-sm font-medium uppercase tracking-wider text-[#D7E2EA] md:px-10 md:pt-8 md:text-lg lg:text-[1.4rem]"
+        className="hero-nav relative z-30 flex justify-between px-6 pt-6 text-sm font-medium uppercase tracking-wider text-[#D7E2EA] md:px-10 md:pt-8 md:text-lg lg:text-[1.4rem]"
         y={-20}
       >
         {[
@@ -267,15 +268,15 @@ function HeroSection() {
         ))}
       </FadeIn>
 
-      <div className="mt-6 overflow-hidden sm:mt-4 md:-mt-5">
+      <div className="hero-heading-wrap mt-6 overflow-hidden sm:mt-4 md:-mt-5">
         <FadeIn delay={0.15} y={40}>
-          <h1 className="hero-heading w-full whitespace-nowrap text-[14vw] font-black uppercase leading-none tracking-tight sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw]">
+          <h1 className="hero-display-heading hero-heading w-full whitespace-nowrap text-[14vw] font-black uppercase leading-none tracking-tight sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw]">
             Hi, i&apos;m jack
           </h1>
         </FadeIn>
       </div>
 
-      <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 w-[280px] -translate-x-1/2 -translate-y-1/2 sm:bottom-0 sm:top-auto sm:w-[360px] sm:translate-y-0 md:w-[440px] lg:w-[520px]">
+      <div className="hero-portrait pointer-events-none absolute left-1/2 top-1/2 z-10 w-[280px] -translate-x-1/2 -translate-y-1/2 sm:bottom-0 sm:top-auto sm:w-[360px] sm:translate-y-0 md:w-[440px] lg:w-[520px]">
         <FadeIn delay={0.6} y={30}>
           <Magnet
             padding={150}
@@ -293,9 +294,9 @@ function HeroSection() {
         </FadeIn>
       </div>
 
-      <div className="relative z-20 mt-auto flex items-end justify-between gap-8 px-6 pb-7 sm:pb-8 md:px-10 md:pb-10">
+      <div className="hero-bottom-bar relative z-20 mt-auto flex items-end justify-between gap-8 px-6 pb-7 sm:pb-8 md:px-10 md:pb-10">
         <FadeIn delay={0.35} y={20}>
-          <p className="max-w-[160px] text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA] sm:max-w-[220px] md:max-w-[260px]">
+          <p className="hero-copy max-w-[160px] text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA] sm:max-w-[220px] md:max-w-[260px]">
             a 3d creator driven by crafting striking and unforgettable projects
           </p>
         </FadeIn>
@@ -403,13 +404,11 @@ function AnimatedCharacter({
   const start = index / total;
   const end = Math.min(start + 1 / total + 0.08, 1);
   const opacity = useTransform(progress, [start, end], [0.2, 1]);
-  const displayCharacter = character === " " ? "\u00A0" : character;
-
   return (
     <span className="relative inline" aria-hidden="true">
-      <span className="invisible">{displayCharacter}</span>
+      <span className="invisible">{character}</span>
       <motion.span className="absolute inset-0" style={{ opacity }}>
-        {displayCharacter}
+        {character}
       </motion.span>
     </span>
   );
@@ -425,18 +424,31 @@ function AnimatedText({ text }: { text: string }) {
   return (
     <p
       ref={paragraphRef}
-      className="max-w-[560px] text-center text-[clamp(1rem,2vw,1.35rem)] font-medium leading-relaxed text-[#D7E2EA]"
+      className="w-full max-w-[560px] text-center text-[clamp(1rem,2vw,1.35rem)] font-medium leading-relaxed text-[#D7E2EA]"
       aria-label={text}
     >
-      {Array.from(text).map((character, index) => (
-        <AnimatedCharacter
-          key={`${character}-${index}`}
-          character={character}
-          index={index}
-          total={text.length}
-          progress={scrollYProgress}
-        />
-      ))}
+      {text.split(" ").map((word, wordIndex, words) => {
+        const characterOffset = words
+          .slice(0, wordIndex)
+          .reduce((total, previousWord) => total + previousWord.length + 1, 0);
+
+        return (
+          <Fragment key={`${word}-${wordIndex}`}>
+            <span className="inline-block">
+              {Array.from(word).map((character, characterIndex) => (
+                <AnimatedCharacter
+                  key={`${character}-${characterOffset + characterIndex}`}
+                  character={character}
+                  index={characterOffset + characterIndex}
+                  total={text.length}
+                  progress={scrollYProgress}
+                />
+              ))}
+            </span>
+            {wordIndex < words.length - 1 ? " " : null}
+          </Fragment>
+        );
+      })}
     </p>
   );
 }
@@ -505,7 +517,7 @@ function AboutSection() {
       ))}
 
       <div className="relative z-10 flex w-full flex-col items-center">
-        <div className="flex flex-col items-center gap-10 sm:gap-14 md:gap-16">
+        <div className="flex w-full flex-col items-center gap-10 sm:gap-14 md:gap-16">
           <FadeIn delay={0} y={40}>
             <h2 className="hero-heading text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight">
               About me
@@ -580,7 +592,7 @@ function ProjectCard({
     <div
       ref={containerRef}
       id={`project-${project.number}`}
-      className="h-[85vh] min-h-[590px]"
+      className="project-card-shell h-[85vh] min-h-[590px]"
     >
       <motion.article
         className="project-card-sticky sticky overflow-hidden rounded-[40px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 text-[#D7E2EA] sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8"
@@ -609,21 +621,21 @@ function ProjectCard({
           </div>
         </div>
 
-        <div className="grid grid-cols-[0.4fr_0.6fr] gap-2 sm:gap-3 md:gap-4">
+        <div className="project-media-grid grid grid-cols-[0.4fr_0.6fr] gap-2 sm:gap-3 md:gap-4">
           <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
             <img
               src={project.images[0]}
               alt={`${project.name} detail one`}
               loading="lazy"
               decoding="async"
-              className="h-[clamp(130px,16vw,230px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
+              className="project-image-small h-[clamp(130px,16vw,230px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
             />
             <img
               src={project.images[1]}
               alt={`${project.name} detail two`}
               loading="lazy"
               decoding="async"
-              className="h-[clamp(160px,22vw,340px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
+              className="project-image-large h-[clamp(160px,22vw,340px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
             />
           </div>
           <img
@@ -631,7 +643,7 @@ function ProjectCard({
             alt={`${project.name} main view`}
             loading="lazy"
             decoding="async"
-            className="h-full min-h-[298px] w-full rounded-[28px] object-cover sm:min-h-[386px] sm:rounded-[40px] md:min-h-[506px] md:rounded-[50px]"
+            className="project-image-main h-full min-h-0 w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
           />
         </div>
       </motion.article>

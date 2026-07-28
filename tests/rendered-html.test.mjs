@@ -40,9 +40,10 @@ test("server-renders the finished portfolio", async () => {
 });
 
 test("removes the disposable starter and keeps portfolio metadata", async () => {
-  const [page, layout, packageJson] = await Promise.all([
+  const [page, layout, globals, packageJson] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
@@ -52,6 +53,9 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   assert.match(page, /function ServicesSection/);
   assert.match(page, /function ProjectsSection/);
   assert.match(layout, /Jack -- 3D Creator/);
+  assert.match(globals, /@layer base/);
+  assert.match(globals, /max-height:\s*640px/);
+  assert.match(globals, /\.project-media-grid/);
   assert.match(packageJson, /"framer-motion"/);
   assert.match(packageJson, /"lucide-react"/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
