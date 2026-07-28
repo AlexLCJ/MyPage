@@ -93,7 +93,5 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   await access(
     new URL("public/assets/changjun-li-profile.jpg", templateRoot),
   );
-  await access(
-    new URL("public/assets/changjun-li-3d-avatar.png", templateRoot),
-  );
+  assert.doesNotMatch(page, /hero-portrait|changjun-li-3d-avatar/);
 });

@@ -2,7 +2,6 @@
 
 import {
   type CSSProperties,
-  type MouseEvent,
   type ReactNode,
   useEffect,
   useRef,
@@ -153,62 +152,6 @@ function FadeIn({
   );
 }
 
-type MagnetProps = {
-  children: ReactNode;
-  padding?: number;
-  strength?: number;
-  activeTransition?: string;
-  inactiveTransition?: string;
-};
-
-function Magnet({
-  children,
-  padding = 150,
-  strength = 3,
-  activeTransition = "transform 0.3s ease-out",
-  inactiveTransition = "transform 0.6s ease-in-out",
-}: MagnetProps) {
-  const targetRef = useRef<HTMLDivElement>(null);
-  const [isActive, setIsActive] = useState(false);
-  const [transform, setTransform] = useState("translate3d(0, 0, 0)");
-
-  const handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
-    const target = targetRef.current;
-    if (!target) return;
-
-    const rect = target.getBoundingClientRect();
-    const x = (event.clientX - (rect.left + rect.width / 2)) / strength;
-    const y = (event.clientY - (rect.top + rect.height / 2)) / strength;
-
-    setIsActive(true);
-    setTransform(`translate3d(${x}px, ${y}px, 0)`);
-  };
-
-  const reset = () => {
-    setIsActive(false);
-    setTransform("translate3d(0, 0, 0)");
-  };
-
-  return (
-    <div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={reset}
-      style={{ margin: -padding, padding }}
-    >
-      <div
-        ref={targetRef}
-        style={{
-          transform,
-          transition: isActive ? activeTransition : inactiveTransition,
-          willChange: "transform",
-        }}
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
-
 function ContactButton() {
   return (
     <a
@@ -334,24 +277,6 @@ function HeroSection({
               />
             </div>
           </div>
-        </FadeIn>
-      </div>
-
-      <div className="hero-portrait pointer-events-none absolute left-1/2 top-1/2 z-10 w-[280px] -translate-x-1/2 -translate-y-1/2 sm:bottom-0 sm:top-auto sm:w-[360px] sm:translate-y-0 md:w-[440px] lg:w-[520px]">
-        <FadeIn delay={0.6} y={30}>
-          <Magnet
-            padding={150}
-            strength={3}
-            activeTransition="transform 0.3s ease-out"
-            inactiveTransition="transform 0.6s ease-in-out"
-          >
-            <img
-              src="/assets/changjun-li-3d-avatar.png"
-              alt="Stylized 3D portrait of Changjun Li"
-              className="pointer-events-auto h-auto w-full select-none object-contain"
-              draggable={false}
-            />
-          </Magnet>
         </FadeIn>
       </div>
 

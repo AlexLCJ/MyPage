@@ -334,11 +334,6 @@ nav button:focus-visible {
     width: calc(100vw - 2rem);
   }
 
-  .hero-portrait {
-    top: 48%;
-    width: min(64vw, 42vh);
-  }
-
   .hero-bottom-bar {
     gap: 0.75rem;
     padding-inline: 1rem;
@@ -373,13 +368,6 @@ nav button:focus-visible {
 
   .hero-text-pressure {
     height: min(9vw, 20vh);
-  }
-
-  .hero-portrait {
-    top: auto;
-    bottom: 0;
-    width: min(42vw, 72vh);
-    translate: -50% 0;
   }
 
   .hero-bottom-bar {
