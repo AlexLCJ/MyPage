@@ -318,7 +318,7 @@ function HeroSection({
                 as="div"
                 text="Changjun Li"
                 ariaHidden
-                flex={false}
+                flex
                 alpha={false}
                 stroke={false}
                 width
