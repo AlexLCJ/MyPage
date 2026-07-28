@@ -17,7 +17,7 @@ import {
 } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import InlineContactLanyard from "@/components/ContactExperience/InlineContactLanyard";
-import FallingText from "@/components/FallingText/FallingText";
+import GradientText from "@/components/GradientText/GradientText";
 import TextPressure from "@/components/TextPressure/TextPressure";
 
 const CONTACT_EMAIL = "hello@changjunli.design";
@@ -357,21 +357,34 @@ function HeroSection({
 
       <div className="hero-bottom-bar relative z-20 mt-auto flex items-end justify-between gap-8 px-6 pb-7 sm:pb-8 md:px-10 md:pb-10">
         <FadeIn delay={0.35} y={20}>
-          <FallingText
+          <GradientText
             className="hero-roles"
-            text={`Enterprise AI Product Manager
-Researcher
-Amateur Pianist`}
-            highlightWords={["AI", "Researcher", "Pianist"]}
-            highlightClass="hero-role-highlight"
-            trigger="hover"
-            backgroundColor="transparent"
-            wireframes={false}
-            gravity={0.56}
-            fontSize="clamp(0.62rem, 1.2vw, 1.2rem)"
-            wordSpacing="0.28em"
-            mouseConstraintStiffness={0.9}
-          />
+            colors={[
+              "#dce8f0",
+              "#8fd8ff",
+              "#8d7cff",
+              "#f07acb",
+              "#dce8f0",
+            ]}
+            animationSpeed={5.5}
+            direction="horizontal"
+            pauseOnHover
+            yoyo={false}
+            showBorder={false}
+            ariaLabel="Enterprise AI Product Manager, Researcher, Amateur Pianist"
+          >
+            <span className="hero-role-lines">
+              <span className="hero-role-line">
+                Enterprise <strong>AI</strong> Product Manager
+              </span>
+              <span className="hero-role-line">
+                <strong>Researcher</strong>
+              </span>
+              <span className="hero-role-line">
+                Amateur <strong>Pianist</strong>
+              </span>
+            </span>
+          </GradientText>
         </FadeIn>
         <FadeIn delay={0.5} y={20}>
           <ContactButton />

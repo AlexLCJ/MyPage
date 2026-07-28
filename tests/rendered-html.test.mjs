@@ -68,6 +68,8 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   assert.match(page, /function ProjectsSection/);
   assert.match(page, /InlineContactLanyard/);
   assert.match(page, /TextPressure/);
+  assert.match(page, /GradientText/);
+  assert.doesNotMatch(page, /FallingText/);
   assert.match(page, /aria-expanded=/);
   assert.match(layout, /Changjun Li -- 3D Creator/);
   assert.match(globals, /@layer base/);
@@ -82,6 +84,7 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   assert.match(packageJson, /"@react-three\/fiber"/);
   assert.match(packageJson, /"@react-three\/rapier"/);
   assert.match(packageJson, /"meshline"/);
+  assert.doesNotMatch(packageJson, /matter-js/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 
   await assert.rejects(

@@ -1,0 +1,52 @@
+.container {
+  position: relative;
+  display: inline-flex;
+  max-width: fit-content;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  cursor: default;
+  backdrop-filter: blur(10px);
+  transition: box-shadow 500ms ease-out;
+}
+
+.withBorder {
+  padding: 0.35rem 0.75rem;
+}
+
+.gradientOverlay {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.gradientOverlay::before {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  border-radius: inherit;
+  background-color: #120f17;
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+.textContent {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container {
+    transition: none;
+  }
+}
