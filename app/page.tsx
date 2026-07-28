@@ -4,7 +4,6 @@ import {
   type CSSProperties,
   type MouseEvent,
   type ReactNode,
-  Fragment,
   useEffect,
   useRef,
   useState,
@@ -17,9 +16,9 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import ContactModal from "@/components/ContactExperience/ContactModal";
+import InlineContactLanyard from "@/components/ContactExperience/InlineContactLanyard";
 
-const CONTACT_EMAIL = "hello@jackstudio.design";
+const CONTACT_EMAIL = "hello@changjunli.design";
 
 const marqueeImages = [
   "https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif",
@@ -48,40 +47,40 @@ const marqueeImages = [
 const services = [
   {
     number: "01",
-    name: "3D Modeling",
+    name: "三维建模",
     description:
-      "Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations.",
+      "根据项目需求创建精细的物体、角色与场景，适用于游戏、产品展示和视觉叙事。",
   },
   {
     number: "02",
-    name: "Rendering",
+    name: "视觉渲染",
     description:
-      "High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life.",
+      "通过灯光、材质和纹理塑造高品质视觉画面，让概念以更真实、更有感染力的方式呈现。",
   },
   {
     number: "03",
-    name: "Motion Design",
+    name: "动态设计",
     description:
-      "Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences.",
+      "运用动画与动态图形增强品牌、产品和数字体验的节奏感，为画面注入故事与生命力。",
   },
   {
     number: "04",
-    name: "Branding",
+    name: "品牌设计",
     description:
-      "Crafting cohesive visual identities — from logos to full brand systems — that communicate a clear and memorable presence.",
+      "从标志到完整品牌系统，建立统一而鲜明的视觉语言，帮助品牌留下清晰、持久的印象。",
   },
   {
     number: "05",
-    name: "Web Design",
+    name: "网页设计",
     description:
-      "Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience.",
+      "设计简洁、现代且注重转化的网站，在布局、字体与用户体验之间取得平衡。",
   },
 ];
 
 const projects = [
   {
     number: "01",
-    category: "Client",
+    category: "客户项目",
     name: "Nextlevel Studio",
     images: [
       "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
@@ -91,7 +90,7 @@ const projects = [
   },
   {
     number: "02",
-    category: "Personal",
+    category: "个人项目",
     name: "Aura Brand Identity",
     images: [
       "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
@@ -101,7 +100,7 @@ const projects = [
   },
   {
     number: "03",
-    category: "Client",
+    category: "客户项目",
     name: "Solaris Digital",
     images: [
       "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
@@ -213,9 +212,9 @@ function ContactButton() {
     <a
       className="contact-button"
       href={`mailto:${CONTACT_EMAIL}`}
-      aria-label="Contact Jack by email"
+      aria-label="通过邮件联系李昌峻"
     >
-      <span>Contact Me</span>
+      <span>联系我</span>
       <ArrowUpRight aria-hidden="true" size={18} strokeWidth={2.2} />
     </a>
   );
@@ -234,20 +233,28 @@ function LiveProjectButton({
       href={href}
       target="_blank"
       rel="noreferrer"
-      aria-label={`View ${projectName} project`}
+      aria-label={`查看 ${projectName} 项目`}
     >
-      <span>Live Project</span>
+      <span>查看项目</span>
       <ArrowUpRight aria-hidden="true" size={18} strokeWidth={2} />
     </a>
   );
 }
 
-function HeroSection({ onContactOpen }: { onContactOpen: () => void }) {
+function HeroSection({
+  isContactOpen,
+  onContactToggle,
+  onContactClose,
+}: {
+  isContactOpen: boolean;
+  onContactToggle: () => void;
+  onContactClose: () => void;
+}) {
   const navigationItems = [
-    { label: "About", href: "#about" },
-    { label: "Price", href: "#services" },
-    { label: "Projects", href: "#projects" },
-    { label: "Contact", onClick: onContactOpen },
+    { label: "关于", href: "#about" },
+    { label: "服务", href: "#services" },
+    { label: "项目", href: "#projects" },
+    { label: "联系", onClick: onContactToggle },
   ];
 
   return (
@@ -257,7 +264,7 @@ function HeroSection({ onContactOpen }: { onContactOpen: () => void }) {
     >
       <FadeIn
         as="nav"
-        className="hero-nav relative z-30 flex justify-between px-6 pt-6 text-sm font-medium uppercase tracking-wider text-[#D7E2EA] md:px-10 md:pt-8 md:text-lg lg:text-[1.4rem]"
+        className="hero-nav relative z-[70] flex justify-between px-6 pt-6 text-sm font-medium tracking-wider text-[#D7E2EA] md:px-10 md:pt-8 md:text-lg lg:text-[1.4rem]"
         y={-20}
       >
         {navigationItems.map((item) =>
@@ -274,8 +281,9 @@ function HeroSection({ onContactOpen }: { onContactOpen: () => void }) {
               key={item.label}
               type="button"
               onClick={item.onClick}
-              className="cursor-pointer border-0 bg-transparent font-[inherit] uppercase tracking-[inherit] text-[inherit] transition-opacity duration-200 hover:opacity-70"
-              aria-haspopup="dialog"
+              className="cursor-pointer border-0 bg-transparent font-[inherit] tracking-[inherit] text-[inherit] transition-opacity duration-200 hover:opacity-70"
+              aria-expanded={isContactOpen}
+              aria-controls="inline-contact-lanyard"
             >
               {item.label}
             </button>
@@ -285,8 +293,8 @@ function HeroSection({ onContactOpen }: { onContactOpen: () => void }) {
 
       <div className="hero-heading-wrap mt-6 overflow-hidden sm:mt-4 md:-mt-5">
         <FadeIn delay={0.15} y={40}>
-          <h1 className="hero-display-heading hero-heading w-full whitespace-nowrap text-[14vw] font-black uppercase leading-none tracking-tight sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw]">
-            Hi, i&apos;m jack
+          <h1 className="hero-display-heading hero-heading w-full whitespace-nowrap text-[clamp(2.25rem,11vw,11rem)] font-black leading-none tracking-[-0.08em]">
+            你好，我是李昌峻
           </h1>
         </FadeIn>
       </div>
@@ -301,7 +309,7 @@ function HeroSection({ onContactOpen }: { onContactOpen: () => void }) {
           >
             <img
               src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
-              alt="Jack, 3D creator"
+              alt="个人形象占位图"
               className="pointer-events-auto h-auto w-full select-none object-contain"
               draggable={false}
             />
@@ -312,12 +320,19 @@ function HeroSection({ onContactOpen }: { onContactOpen: () => void }) {
       <div className="hero-bottom-bar relative z-20 mt-auto flex items-end justify-between gap-8 px-6 pb-7 sm:pb-8 md:px-10 md:pb-10">
         <FadeIn delay={0.35} y={20}>
           <p className="hero-copy max-w-[160px] text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA] sm:max-w-[220px] md:max-w-[260px]">
-            a 3d creator driven by crafting striking and unforgettable projects
+            专注于创造鲜明、难忘且富有生命力的三维视觉作品
           </p>
         </FadeIn>
         <FadeIn delay={0.5} y={20}>
           <ContactButton />
         </FadeIn>
+      </div>
+      <div id="inline-contact-lanyard">
+        <InlineContactLanyard
+          email={CONTACT_EMAIL}
+          isOpen={isContactOpen}
+          onClose={onContactClose}
+        />
       </div>
     </section>
   );
@@ -389,7 +404,7 @@ function MarqueeSection() {
     <section
       ref={sectionRef}
       className="flex flex-col gap-3 overflow-hidden bg-[#0C0C0C] pb-10 pt-24 sm:pt-32 md:pt-40"
-      aria-label="Selected work reel"
+      aria-label="精选作品动态预览"
     >
       <MarqueeRow
         images={marqueeImages.slice(0, 11)}
@@ -442,40 +457,27 @@ function AnimatedText({ text }: { text: string }) {
       className="w-full max-w-[560px] text-center text-[clamp(1rem,2vw,1.35rem)] font-medium leading-relaxed text-[#D7E2EA]"
       aria-label={text}
     >
-      {text.split(" ").map((word, wordIndex, words) => {
-        const characterOffset = words
-          .slice(0, wordIndex)
-          .reduce((total, previousWord) => total + previousWord.length + 1, 0);
-
-        return (
-          <Fragment key={`${word}-${wordIndex}`}>
-            <span className="inline-block">
-              {Array.from(word).map((character, characterIndex) => (
-                <AnimatedCharacter
-                  key={`${character}-${characterOffset + characterIndex}`}
-                  character={character}
-                  index={characterOffset + characterIndex}
-                  total={text.length}
-                  progress={scrollYProgress}
-                />
-              ))}
-            </span>
-            {wordIndex < words.length - 1 ? " " : null}
-          </Fragment>
-        );
-      })}
+      {Array.from(text).map((character, index) => (
+        <AnimatedCharacter
+          key={`${character}-${index}`}
+          character={character}
+          index={index}
+          total={text.length}
+          progress={scrollYProgress}
+        />
+      ))}
     </p>
   );
 }
 
 function AboutSection() {
   const aboutText =
-    "With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!";
+    "拥有五年以上设计经验，我专注于品牌设计、网页设计与用户体验。我喜欢与希望建立独特形象的团队合作，让好的想法被看见。期待与你一起创造令人难忘的作品。";
 
   const decorations = [
     {
       src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png",
-      alt: "Metallic moon",
+      alt: "金属月球装饰",
       className:
         "absolute left-[1%] top-[4%] w-[120px] sm:left-[2%] sm:w-[160px] md:left-[4%] md:w-[210px]",
       delay: 0.1,
@@ -483,7 +485,7 @@ function AboutSection() {
     },
     {
       src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png",
-      alt: "Abstract 3D object",
+      alt: "抽象三维装饰",
       className:
         "absolute bottom-[8%] left-[3%] w-[100px] sm:left-[6%] sm:w-[140px] md:left-[10%] md:w-[180px]",
       delay: 0.25,
@@ -491,7 +493,7 @@ function AboutSection() {
     },
     {
       src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png",
-      alt: "Chrome building block",
+      alt: "金属积木装饰",
       className:
         "absolute right-[1%] top-[4%] w-[120px] sm:right-[2%] sm:w-[160px] md:right-[4%] md:w-[210px]",
       delay: 0.15,
@@ -499,7 +501,7 @@ function AboutSection() {
     },
     {
       src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png",
-      alt: "Abstract 3D sculpture",
+      alt: "抽象三维雕塑",
       className:
         "absolute bottom-[8%] right-[3%] w-[130px] sm:right-[6%] sm:w-[170px] md:right-[10%] md:w-[220px]",
       delay: 0.3,
@@ -535,7 +537,7 @@ function AboutSection() {
         <div className="flex w-full flex-col items-center gap-10 sm:gap-14 md:gap-16">
           <FadeIn delay={0} y={40}>
             <h2 className="hero-heading text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight">
-              About me
+              关于我
             </h2>
           </FadeIn>
           <AnimatedText text={aboutText} />
@@ -556,7 +558,7 @@ function ServicesSection() {
     >
       <FadeIn y={40}>
         <h2 className="mb-16 text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight sm:mb-20 md:mb-28">
-          Services
+          服务
         </h2>
       </FadeIn>
 
@@ -642,14 +644,14 @@ function ProjectCard({
         <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
           <img
             src={project.images[0]}
-            alt={`${project.name} detail one`}
+            alt={`${project.name} 项目细节一`}
             loading="lazy"
             decoding="async"
             className="project-image-small h-[clamp(130px,16vw,230px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
           />
           <img
             src={project.images[1]}
-            alt={`${project.name} detail two`}
+            alt={`${project.name} 项目细节二`}
             loading="lazy"
             decoding="async"
             className="project-image-large h-[clamp(160px,22vw,340px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
@@ -657,7 +659,7 @@ function ProjectCard({
         </div>
         <img
           src={project.images[2]}
-          alt={`${project.name} main view`}
+          alt={`${project.name} 项目主视觉`}
           loading="lazy"
           decoding="async"
           className="project-image-main h-full min-h-0 w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
@@ -681,7 +683,7 @@ function ProjectsSection() {
     >
       <FadeIn y={40}>
         <h2 className="hero-heading mb-16 text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight sm:mb-20 md:mb-28">
-          Project
+          项目
         </h2>
       </FadeIn>
 
@@ -707,19 +709,16 @@ export default function Home() {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
-    <>
-      <main className="site-shell overflow-x-clip bg-[#0C0C0C]">
-        <HeroSection onContactOpen={() => setIsContactOpen(true)} />
-        <MarqueeSection />
-        <AboutSection />
-        <ServicesSection />
-        <ProjectsSection />
-      </main>
-      <ContactModal
-        email={CONTACT_EMAIL}
-        isOpen={isContactOpen}
-        onClose={() => setIsContactOpen(false)}
+    <main className="site-shell overflow-x-clip bg-[#0C0C0C]">
+      <HeroSection
+        isContactOpen={isContactOpen}
+        onContactToggle={() => setIsContactOpen((current) => !current)}
+        onContactClose={() => setIsContactOpen(false)}
       />
-    </>
+      <MarqueeSection />
+      <AboutSection />
+      <ServicesSection />
+      <ProjectsSection />
+    </main>
   );
 }

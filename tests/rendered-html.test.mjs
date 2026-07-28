@@ -31,10 +31,10 @@ test("server-renders the finished portfolio", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Jack -- 3D Creator<\/title>/i);
-  assert.match(html, /Hi, i(?:&#x27;|')m jack/i);
-  assert.match(html, /About me/i);
-  assert.match(html, /Services/i);
+  assert.match(html, /<title>Changjun Li（李昌峻）｜3D 创作者<\/title>/i);
+  assert.match(html, /你好，我是李昌峻/i);
+  assert.match(html, /关于我/i);
+  assert.match(html, /服务/i);
   assert.match(html, /Nextlevel Studio/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
 });
@@ -52,9 +52,9 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   assert.match(page, /function AboutSection/);
   assert.match(page, /function ServicesSection/);
   assert.match(page, /function ProjectsSection/);
-  assert.match(page, /ContactModal/);
-  assert.match(page, /aria-haspopup="dialog"/);
-  assert.match(layout, /Jack -- 3D Creator/);
+  assert.match(page, /InlineContactLanyard/);
+  assert.match(page, /aria-expanded=/);
+  assert.match(layout, /Changjun Li（李昌峻）｜3D 创作者/);
   assert.match(globals, /@layer base/);
   assert.match(globals, /max-height:\s*640px/);
   assert.match(globals, /\.project-card-stack/);

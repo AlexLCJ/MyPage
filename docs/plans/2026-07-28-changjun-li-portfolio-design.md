@@ -1,4 +1,4 @@
-# Jack 3D Creator Portfolio
+# Changjun Li 3D Creator Portfolio
 
 ## Direction
 

@@ -20,9 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
     incomingHeaders.get("x-forwarded-proto") ??
     (host.includes("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
-  const title = "Jack -- 3D Creator";
+  const title = "Changjun Li（李昌峻）｜3D 创作者";
   const description =
-    "A bold 3D creator portfolio featuring selected work, services, and creative direction.";
+    "李昌峻的个人作品集，展示三维视觉、动态设计、品牌与网页设计项目。";
 
   return {
     title,
@@ -32,20 +32,11 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       type: "website",
       url: origin,
-      images: [
-        {
-          url: new URL("/og.png", origin).toString(),
-          width: 1536,
-          height: 910,
-          alt: "Hi, I'm Jack — 3D Creator",
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [new URL("/og.png", origin).toString()],
     },
   };
 }
@@ -56,8 +47,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${kanit.variable}`}>{children}</body>
+    <html lang="zh-CN">
+      <body className={kanit.variable}>{children}</body>
     </html>
   );
 }

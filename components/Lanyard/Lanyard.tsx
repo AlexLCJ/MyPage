@@ -93,10 +93,14 @@ export default function Lanyard({
     return () => window.removeEventListener("resize", updateMobileState);
   }, []);
 
+  const cameraPosition: [number, number, number] = isMobile
+    ? [position[0], position[1], Math.max(position[2], 20.5)]
+    : position;
+
   return (
     <div className="lanyard-wrapper">
       <Canvas
-        camera={{ position, fov }}
+        camera={{ position: cameraPosition, fov }}
         dpr={[1, isMobile ? 1.35 : 1.8]}
         gl={{
           alpha: transparent,
@@ -333,6 +337,7 @@ function Band({
   });
   const [dragged, setDragged] = useState<false | THREE.Vector3>(false);
   const [hovered, setHovered] = useState(false);
+  const initialSpacing = isMobile ? 0.3 : 0.5;
 
   useRopeJoint(fixed, jointOne, [
     [0, 0, 0],
@@ -451,7 +456,7 @@ function Band({
         <RigidBody
           ref={jointOne}
           {...segmentProps}
-          position={[0.5, 0, 0]}
+          position={[initialSpacing, 0, 0]}
           type="dynamic"
         >
           <BallCollider args={[0.1]} />
@@ -459,7 +464,7 @@ function Band({
         <RigidBody
           ref={jointTwo}
           {...segmentProps}
-          position={[1, 0, 0]}
+          position={[initialSpacing * 2, 0, 0]}
           type="dynamic"
         >
           <BallCollider args={[0.1]} />
@@ -467,7 +472,7 @@ function Band({
         <RigidBody
           ref={jointThree}
           {...segmentProps}
-          position={[1.5, 0, 0]}
+          position={[initialSpacing * 3, 0, 0]}
           type="dynamic"
         >
           <BallCollider args={[0.1]} />
@@ -475,7 +480,7 @@ function Band({
         <RigidBody
           ref={card}
           {...segmentProps}
-          position={[2, 0, 0]}
+          position={[initialSpacing * 4, 0, 0]}
           type={dragged ? "kinematicPosition" : "dynamic"}
         >
           <CuboidCollider args={[0.8, 1.125, 0.02]} />
