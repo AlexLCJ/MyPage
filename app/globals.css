@@ -139,7 +139,8 @@ img {
 
 .contact-button:focus-visible,
 .live-project-button:focus-visible,
-nav a:focus-visible {
+nav a:focus-visible,
+nav button:focus-visible {
   outline: 3px solid #ffffff;
   outline-offset: 5px;
 }

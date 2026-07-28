@@ -2,7 +2,6 @@
 
 import {
   type CSSProperties,
-  type ElementType,
   type MouseEvent,
   type ReactNode,
   Fragment,
@@ -14,9 +13,11 @@ import {
   motion,
   useScroll,
   useTransform,
+  type MotionStyle,
   type MotionValue,
 } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import ContactModal from "@/components/ContactExperience/ContactModal";
 
 const CONTACT_EMAIL = "hello@jackstudio.design";
 
@@ -111,7 +112,7 @@ const projects = [
 ];
 
 type FadeInProps = {
-  as?: ElementType;
+  as?: "div" | "nav";
   children: ReactNode;
   className?: string;
   delay?: number;
@@ -131,7 +132,7 @@ function FadeIn({
   x = 0,
   y = 30,
 }: FadeInProps) {
-  const MotionElement = motion.create(as);
+  const MotionElement = as === "nav" ? motion.nav : motion.div;
 
   return (
     <MotionElement
@@ -241,7 +242,14 @@ function LiveProjectButton({
   );
 }
 
-function HeroSection() {
+function HeroSection({ onContactOpen }: { onContactOpen: () => void }) {
+  const navigationItems = [
+    { label: "About", href: "#about" },
+    { label: "Price", href: "#services" },
+    { label: "Projects", href: "#projects" },
+    { label: "Contact", onClick: onContactOpen },
+  ];
+
   return (
     <section
       id="top"
@@ -252,20 +260,27 @@ function HeroSection() {
         className="hero-nav relative z-30 flex justify-between px-6 pt-6 text-sm font-medium uppercase tracking-wider text-[#D7E2EA] md:px-10 md:pt-8 md:text-lg lg:text-[1.4rem]"
         y={-20}
       >
-        {[
-          ["About", "#about"],
-          ["Price", "#services"],
-          ["Projects", "#projects"],
-          ["Contact", `mailto:${CONTACT_EMAIL}`],
-        ].map(([label, href]) => (
-          <a
-            key={label}
-            href={href}
-            className="transition-opacity duration-200 hover:opacity-70"
-          >
-            {label}
-          </a>
-        ))}
+        {navigationItems.map((item) =>
+          item.href ? (
+            <a
+              key={item.label}
+              href={item.href}
+              className="transition-opacity duration-200 hover:opacity-70"
+            >
+              {item.label}
+            </a>
+          ) : (
+            <button
+              key={item.label}
+              type="button"
+              onClick={item.onClick}
+              className="cursor-pointer border-0 bg-transparent font-[inherit] uppercase tracking-[inherit] text-[inherit] transition-opacity duration-200 hover:opacity-70"
+              aria-haspopup="dialog"
+            >
+              {item.label}
+            </button>
+          ),
+        )}
       </FadeIn>
 
       <div className="hero-heading-wrap mt-6 overflow-hidden sm:mt-4 md:-mt-5">
@@ -602,7 +617,7 @@ function ProjectCard({
           scale,
           zIndex: index + 1,
           "--card-offset": `${index * 28}px`,
-        } as CSSProperties
+        } as unknown as MotionStyle
       }
     >
       <div className="mb-4 grid grid-cols-[auto_1fr] items-center gap-x-5 gap-y-2 sm:mb-6 sm:grid-cols-[auto_0.65fr_1.3fr_auto] sm:gap-6 md:mb-8 md:gap-8">
@@ -689,13 +704,22 @@ function ProjectsSection() {
 }
 
 export default function Home() {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
   return (
-    <main className="site-shell overflow-x-clip bg-[#0C0C0C]">
-      <HeroSection />
-      <MarqueeSection />
-      <AboutSection />
-      <ServicesSection />
-      <ProjectsSection />
-    </main>
+    <>
+      <main className="site-shell overflow-x-clip bg-[#0C0C0C]">
+        <HeroSection onContactOpen={() => setIsContactOpen(true)} />
+        <MarqueeSection />
+        <AboutSection />
+        <ServicesSection />
+        <ProjectsSection />
+      </main>
+      <ContactModal
+        email={CONTACT_EMAIL}
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+      />
+    </>
   );
 }

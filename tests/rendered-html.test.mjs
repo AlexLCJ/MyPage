@@ -52,6 +52,8 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   assert.match(page, /function AboutSection/);
   assert.match(page, /function ServicesSection/);
   assert.match(page, /function ProjectsSection/);
+  assert.match(page, /ContactModal/);
+  assert.match(page, /aria-haspopup="dialog"/);
   assert.match(layout, /Jack -- 3D Creator/);
   assert.match(globals, /@layer base/);
   assert.match(globals, /max-height:\s*640px/);
@@ -60,6 +62,9 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   assert.match(globals, /\.project-media-grid/);
   assert.match(packageJson, /"framer-motion"/);
   assert.match(packageJson, /"lucide-react"/);
+  assert.match(packageJson, /"@react-three\/fiber"/);
+  assert.match(packageJson, /"@react-three\/rapier"/);
+  assert.match(packageJson, /"meshline"/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 
   await assert.rejects(
