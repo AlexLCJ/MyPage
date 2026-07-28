@@ -211,7 +211,7 @@
 .pc-avatar-content {
   overflow: visible;
   backface-visibility: hidden;
-  mix-blend-mode: luminosity;
+  mix-blend-mode: normal;
   transform: translateZ(2px);
 }
 
@@ -219,10 +219,11 @@
   position: absolute;
   bottom: -1px;
   left: 50%;
-  width: 108%;
-  height: 83%;
-  object-fit: contain;
-  object-position: center bottom;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  filter: brightness(0.62) contrast(1.14);
   transform: translateX(
       calc(-50% + (var(--pointer-from-left) - 0.5) * 6px)
     )

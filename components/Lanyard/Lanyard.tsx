@@ -13,6 +13,7 @@ import {
   type ThreeElement,
   type ThreeEvent,
   useFrame,
+  useThree,
 } from "@react-three/fiber";
 import {
   Environment,
@@ -101,7 +102,7 @@ export default function Lanyard({
     <div className="lanyard-wrapper">
       <Canvas
         camera={{ position: cameraPosition, fov }}
-        dpr={[1, isMobile ? 1.35 : 1.8]}
+        dpr={[1, isMobile ? 1.15 : 1.5]}
         gl={{
           alpha: transparent,
           antialias: !isMobile,
@@ -129,7 +130,7 @@ export default function Lanyard({
             profileContent={profileContent}
           />
         </Physics>
-        <Environment blur={0.75}>
+        <Environment blur={0.7} frames={1} resolution={64}>
           <Lightformer
             intensity={2}
             color="white"
@@ -202,11 +203,15 @@ function Band({
   const jointTwo = useRef<LanyardRigidBody>(null!);
   const jointThree = useRef<RapierRigidBody>(null!);
   const card = useRef<RapierRigidBody>(null!);
+  const viewportWidth = useThree((state) => state.viewport.width);
+  const anchorX = isMobile
+    ? 0
+    : Math.max(0, viewportWidth / 2 - 2.3);
 
-  const pointerPosition = new THREE.Vector3();
-  const angularVelocity = new THREE.Vector3();
-  const rotation = new THREE.Vector3();
-  const direction = new THREE.Vector3();
+  const pointerPosition = useMemo(() => new THREE.Vector3(), []);
+  const angularVelocity = useMemo(() => new THREE.Vector3(), []);
+  const rotation = useMemo(() => new THREE.Vector3(), []);
+  const direction = useMemo(() => new THREE.Vector3(), []);
 
   const segmentProps: RigidBodyProps = {
     type: "dynamic",
@@ -337,7 +342,7 @@ function Band({
   });
   const [dragged, setDragged] = useState<false | THREE.Vector3>(false);
   const [hovered, setHovered] = useState(false);
-  const initialSpacing = isMobile ? 0.3 : 0.5;
+  const initialCardOffset = isMobile ? 0.18 : 0.35;
 
   useRopeJoint(fixed, jointOne, [
     [0, 0, 0],
@@ -451,12 +456,12 @@ function Band({
 
   return (
     <>
-      <group position={[0, 5.4, 0]}>
+      <group position={[anchorX, 5.4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody
           ref={jointOne}
           {...segmentProps}
-          position={[initialSpacing, 0, 0]}
+          position={[0, -0.85, 0]}
           type="dynamic"
         >
           <BallCollider args={[0.1]} />
@@ -464,7 +469,7 @@ function Band({
         <RigidBody
           ref={jointTwo}
           {...segmentProps}
-          position={[initialSpacing * 2, 0, 0]}
+          position={[0, -1.7, 0]}
           type="dynamic"
         >
           <BallCollider args={[0.1]} />
@@ -472,7 +477,7 @@ function Band({
         <RigidBody
           ref={jointThree}
           {...segmentProps}
-          position={[initialSpacing * 3, 0, 0]}
+          position={[0, -2.55, 0]}
           type="dynamic"
         >
           <BallCollider args={[0.1]} />
@@ -480,7 +485,7 @@ function Band({
         <RigidBody
           ref={card}
           {...segmentProps}
-          position={[initialSpacing * 4, 0, 0]}
+          position={[initialCardOffset, -4, 0]}
           type={dragged ? "kinematicPosition" : "dynamic"}
         >
           <CuboidCollider args={[0.8, 1.125, 0.02]} />

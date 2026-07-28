@@ -47,40 +47,40 @@ const marqueeImages = [
 const services = [
   {
     number: "01",
-    name: "三维建模",
+    name: "3D Modeling",
     description:
-      "根据项目需求创建精细的物体、角色与场景，适用于游戏、产品展示和视觉叙事。",
+      "Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations.",
   },
   {
     number: "02",
-    name: "视觉渲染",
+    name: "Rendering",
     description:
-      "通过灯光、材质和纹理塑造高品质视觉画面，让概念以更真实、更有感染力的方式呈现。",
+      "High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life.",
   },
   {
     number: "03",
-    name: "动态设计",
+    name: "Motion Design",
     description:
-      "运用动画与动态图形增强品牌、产品和数字体验的节奏感，为画面注入故事与生命力。",
+      "Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences.",
   },
   {
     number: "04",
-    name: "品牌设计",
+    name: "Branding",
     description:
-      "从标志到完整品牌系统，建立统一而鲜明的视觉语言，帮助品牌留下清晰、持久的印象。",
+      "Crafting cohesive visual identities — from logos to full brand systems — that communicate a clear and memorable presence.",
   },
   {
     number: "05",
-    name: "网页设计",
+    name: "Web Design",
     description:
-      "设计简洁、现代且注重转化的网站，在布局、字体与用户体验之间取得平衡。",
+      "Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience.",
   },
 ];
 
 const projects = [
   {
     number: "01",
-    category: "客户项目",
+    category: "Client",
     name: "Nextlevel Studio",
     images: [
       "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
@@ -90,7 +90,7 @@ const projects = [
   },
   {
     number: "02",
-    category: "个人项目",
+    category: "Personal",
     name: "Aura Brand Identity",
     images: [
       "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
@@ -100,7 +100,7 @@ const projects = [
   },
   {
     number: "03",
-    category: "客户项目",
+    category: "Client",
     name: "Solaris Digital",
     images: [
       "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
@@ -212,9 +212,9 @@ function ContactButton() {
     <a
       className="contact-button"
       href={`mailto:${CONTACT_EMAIL}`}
-      aria-label="通过邮件联系李昌峻"
+      aria-label="Contact Changjun Li by email"
     >
-      <span>联系我</span>
+      <span>Contact Me</span>
       <ArrowUpRight aria-hidden="true" size={18} strokeWidth={2.2} />
     </a>
   );
@@ -233,9 +233,9 @@ function LiveProjectButton({
       href={href}
       target="_blank"
       rel="noreferrer"
-      aria-label={`查看 ${projectName} 项目`}
+      aria-label={`View the ${projectName} project`}
     >
-      <span>查看项目</span>
+      <span>Live Project</span>
       <ArrowUpRight aria-hidden="true" size={18} strokeWidth={2} />
     </a>
   );
@@ -251,10 +251,10 @@ function HeroSection({
   onContactClose: () => void;
 }) {
   const navigationItems = [
-    { label: "关于", href: "#about" },
-    { label: "服务", href: "#services" },
-    { label: "项目", href: "#projects" },
-    { label: "联系", onClick: onContactToggle },
+    { label: "About", href: "#about" },
+    { label: "Price", href: "#services" },
+    { label: "Projects", href: "#projects" },
+    { label: "Contact", onClick: onContactToggle },
   ];
 
   return (
@@ -293,8 +293,13 @@ function HeroSection({
 
       <div className="hero-heading-wrap mt-6 overflow-hidden sm:mt-4 md:-mt-5">
         <FadeIn delay={0.15} y={40}>
-          <h1 className="hero-display-heading hero-heading w-full whitespace-nowrap text-[clamp(2.25rem,11vw,11rem)] font-black leading-none tracking-[-0.08em]">
-            你好，我是李昌峻
+          <h1
+            className="hero-display-heading hero-heading w-full whitespace-nowrap text-[clamp(1.65rem,11.3vw,11rem)] font-black uppercase leading-none tracking-[-0.08em]"
+            aria-label="Hi, I'm Changjun Li"
+          >
+            Hi, I&apos;m
+            <span className="inline-block w-[0.2em]" aria-hidden="true" />
+            Changjun Li
           </h1>
         </FadeIn>
       </div>
@@ -309,7 +314,7 @@ function HeroSection({
           >
             <img
               src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
-              alt="个人形象占位图"
+              alt="3D portrait placeholder"
               className="pointer-events-auto h-auto w-full select-none object-contain"
               draggable={false}
             />
@@ -320,7 +325,8 @@ function HeroSection({
       <div className="hero-bottom-bar relative z-20 mt-auto flex items-end justify-between gap-8 px-6 pb-7 sm:pb-8 md:px-10 md:pb-10">
         <FadeIn delay={0.35} y={20}>
           <p className="hero-copy max-w-[160px] text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA] sm:max-w-[220px] md:max-w-[260px]">
-            专注于创造鲜明、难忘且富有生命力的三维视觉作品
+            A 3D creator driven by crafting striking and unforgettable
+            projects
           </p>
         </FadeIn>
         <FadeIn delay={0.5} y={20}>
@@ -404,7 +410,7 @@ function MarqueeSection() {
     <section
       ref={sectionRef}
       className="flex flex-col gap-3 overflow-hidden bg-[#0C0C0C] pb-10 pt-24 sm:pt-32 md:pt-40"
-      aria-label="精选作品动态预览"
+      aria-label="Selected project motion previews"
     >
       <MarqueeRow
         images={marqueeImages.slice(0, 11)}
@@ -472,12 +478,12 @@ function AnimatedText({ text }: { text: string }) {
 
 function AboutSection() {
   const aboutText =
-    "拥有五年以上设计经验，我专注于品牌设计、网页设计与用户体验。我喜欢与希望建立独特形象的团队合作，让好的想法被看见。期待与你一起创造令人难忘的作品。";
+    "With more than five years of experience in design, I focus on branding, web design, and user experience. I truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!";
 
   const decorations = [
     {
       src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png",
-      alt: "金属月球装饰",
+      alt: "Metallic moon decoration",
       className:
         "absolute left-[1%] top-[4%] w-[120px] sm:left-[2%] sm:w-[160px] md:left-[4%] md:w-[210px]",
       delay: 0.1,
@@ -485,7 +491,7 @@ function AboutSection() {
     },
     {
       src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png",
-      alt: "抽象三维装饰",
+      alt: "Abstract 3D decoration",
       className:
         "absolute bottom-[8%] left-[3%] w-[100px] sm:left-[6%] sm:w-[140px] md:left-[10%] md:w-[180px]",
       delay: 0.25,
@@ -493,7 +499,7 @@ function AboutSection() {
     },
     {
       src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png",
-      alt: "金属积木装饰",
+      alt: "Metallic block decoration",
       className:
         "absolute right-[1%] top-[4%] w-[120px] sm:right-[2%] sm:w-[160px] md:right-[4%] md:w-[210px]",
       delay: 0.15,
@@ -501,7 +507,7 @@ function AboutSection() {
     },
     {
       src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png",
-      alt: "抽象三维雕塑",
+      alt: "Abstract 3D sculpture",
       className:
         "absolute bottom-[8%] right-[3%] w-[130px] sm:right-[6%] sm:w-[170px] md:right-[10%] md:w-[220px]",
       delay: 0.3,
@@ -537,7 +543,7 @@ function AboutSection() {
         <div className="flex w-full flex-col items-center gap-10 sm:gap-14 md:gap-16">
           <FadeIn delay={0} y={40}>
             <h2 className="hero-heading text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight">
-              关于我
+              About Me
             </h2>
           </FadeIn>
           <AnimatedText text={aboutText} />
@@ -558,7 +564,7 @@ function ServicesSection() {
     >
       <FadeIn y={40}>
         <h2 className="mb-16 text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight sm:mb-20 md:mb-28">
-          服务
+          Services
         </h2>
       </FadeIn>
 
@@ -644,14 +650,14 @@ function ProjectCard({
         <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
           <img
             src={project.images[0]}
-            alt={`${project.name} 项目细节一`}
+            alt={`${project.name} project detail one`}
             loading="lazy"
             decoding="async"
             className="project-image-small h-[clamp(130px,16vw,230px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
           />
           <img
             src={project.images[1]}
-            alt={`${project.name} 项目细节二`}
+            alt={`${project.name} project detail two`}
             loading="lazy"
             decoding="async"
             className="project-image-large h-[clamp(160px,22vw,340px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
@@ -659,7 +665,7 @@ function ProjectCard({
         </div>
         <img
           src={project.images[2]}
-          alt={`${project.name} 项目主视觉`}
+          alt={`${project.name} project main visual`}
           loading="lazy"
           decoding="async"
           className="project-image-main h-full min-h-0 w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
@@ -683,7 +689,7 @@ function ProjectsSection() {
     >
       <FadeIn y={40}>
         <h2 className="hero-heading mb-16 text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight sm:mb-20 md:mb-28">
-          项目
+          Project
         </h2>
       </FadeIn>
 

@@ -3,22 +3,15 @@
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
 
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
 import "./InlineContactLanyard.css";
 
-const PROFILE_AVATAR_PLACEHOLDER =
-  "https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png";
+const PROFILE_AVATAR = "/assets/changjun-li-profile.jpg";
 
 const Lanyard = dynamic(() => import("@/components/Lanyard/Lanyard"), {
   ssr: false,
-  loading: () => (
-    <div className="inline-lanyard-loader" role="status">
-      <span />
-      <p>正在加载名片</p>
-    </div>
-  ),
+  loading: () => null,
 });
 
 type InlineContactLanyardProps = {
@@ -33,6 +26,13 @@ export default function InlineContactLanyard({
   onClose,
 }: InlineContactLanyardProps) {
   useEffect(() => {
+    void import("@/components/Lanyard/Lanyard");
+    const profileImage = new Image();
+    profileImage.src = PROFILE_AVATAR;
+    void profileImage.decode().catch(() => undefined);
+  }, []);
+
+  useEffect(() => {
     if (!isOpen) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -46,17 +46,16 @@ export default function InlineContactLanyard({
   const profileCard = (
     <ProfileCard
       name="Changjun Li"
-      title="李昌峻 · 3D Creator"
+      title="李昌峻 · 3D CREATOR"
       handle="changjunli"
-      status="开放合作"
-      contactText="联系我"
-      avatarUrl={PROFILE_AVATAR_PLACEHOLDER}
-      miniAvatarUrl={PROFILE_AVATAR_PLACEHOLDER}
+      status="AVAILABLE"
+      contactText="CONTACT"
+      avatarUrl={PROFILE_AVATAR}
+      miniAvatarUrl={PROFILE_AVATAR}
       showUserInfo
       enableTilt={false}
-      behindGlowEnabled
-      behindGlowColor="rgba(182, 0, 168, 0.66)"
-      innerGradient="linear-gradient(145deg, rgba(11, 11, 14, 0.98) 0%, rgba(94, 16, 122, 0.82) 52%, rgba(190, 76, 0, 0.62) 100%)"
+      behindGlowEnabled={false}
+      innerGradient="linear-gradient(145deg, rgba(4, 5, 8, 0.52) 0%, rgba(41, 55, 76, 0.36) 48%, rgba(61, 31, 74, 0.48) 100%)"
       onContactClick={() => {
         window.location.href = `mailto:${email}`;
       }}
@@ -68,25 +67,12 @@ export default function InlineContactLanyard({
       {isOpen ? (
         <motion.aside
           className="inline-contact-lanyard"
-          aria-label="李昌峻的联系名片"
-          initial={{ opacity: 0, y: -48, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -64, scale: 0.96 }}
-          transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+          aria-label="Changjun Li contact card"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18, ease: "easeOut" }}
         >
-          <div className="inline-lanyard-glow" aria-hidden="true" />
-          <div className="inline-lanyard-hint" aria-hidden="true">
-            <span>抓住名片</span>
-            <span>拖动 · 松开 · 摆动</span>
-          </div>
-          <button
-            className="inline-lanyard-close"
-            type="button"
-            onClick={onClose}
-            aria-label="收起联系名片"
-          >
-            <X aria-hidden="true" size={18} strokeWidth={1.8} />
-          </button>
           <div className="inline-lanyard-canvas">
             <Lanyard
               position={[0, 0, 17.5]}

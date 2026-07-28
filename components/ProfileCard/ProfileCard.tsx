@@ -75,10 +75,10 @@ function ProfileCardComponent({
   mobileTiltSensitivity = 5,
   miniAvatarUrl,
   name = "Changjun Li",
-  title = "李昌峻 · 3D Creator",
+  title = "3D Creator",
   handle = "changjunli",
-  status = "开放合作",
-  contactText = "联系我",
+  status = "Available",
+  contactText = "Contact",
   showUserInfo = true,
   onContactClick,
 }: ProfileCardProps) {
@@ -382,6 +382,7 @@ function ProfileCardComponent({
                 className="avatar"
                 src={avatarUrl}
                 alt={`${name} avatar`}
+                decoding="async"
                 draggable={false}
               />
               {showUserInfo ? (
@@ -392,6 +393,7 @@ function ProfileCardComponent({
                         src={miniAvatarUrl || avatarUrl}
                         alt=""
                         aria-hidden="true"
+                        decoding="async"
                         draggable={false}
                       />
                     </div>

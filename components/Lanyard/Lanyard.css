@@ -33,8 +33,16 @@
   backface-visibility: hidden;
 }
 
-.lanyard-profile .pc-contact-btn {
-  pointer-events: auto;
+.lanyard-profile .pc-shine {
+  animation: none;
+  opacity: 0.36;
+  filter: brightness(0.55) contrast(1.2) saturate(0.58);
+  mix-blend-mode: soft-light;
+}
+
+.lanyard-profile .pc-glare {
+  opacity: 0.46;
+  mix-blend-mode: soft-light;
 }
 
 @media (max-width: 767px) {

@@ -1,4 +1,4 @@
-# Changjun Li（李昌峻）— 3D Creator
+# Changjun Li — 3D Creator
 
 A responsive, motion-rich 3D creator portfolio built as a reusable personal
 site framework.
