@@ -575,83 +575,90 @@ function ProjectCard({
   project,
   index,
   totalCards,
+  stackProgress,
 }: {
   project: (typeof projects)[number];
   index: number;
   totalCards: number;
+  stackProgress: MotionValue<number>;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
   const targetScale = 1 - (totalCards - 1 - index) * 0.03;
-  const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale]);
+  const scaleStep = 1 / Math.max(totalCards - 0.4, 1);
+  const scaleStart = 0.18 + index * scaleStep;
+  const scaleEnd = Math.min(scaleStart + scaleStep * 0.82, 1);
+  const scale = useTransform(
+    stackProgress,
+    [scaleStart, scaleEnd],
+    [1, targetScale],
+  );
 
   return (
-    <div
-      ref={containerRef}
+    <motion.article
       id={`project-${project.number}`}
-      className="project-card-shell h-[85vh] min-h-[590px]"
+      data-project-card={project.number}
+      className="project-stack-card project-card-sticky sticky overflow-hidden rounded-[40px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 text-[#D7E2EA] sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8"
+      style={
+        {
+          scale,
+          zIndex: index + 1,
+          "--card-offset": `${index * 28}px`,
+        } as CSSProperties
+      }
     >
-      <motion.article
-        className="project-card-sticky sticky overflow-hidden rounded-[40px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 text-[#D7E2EA] sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8"
-        style={
-          {
-            scale,
-            "--card-offset": `${index * 28}px`,
-          } as CSSProperties
-        }
-      >
-        <div className="mb-4 grid grid-cols-[auto_1fr] items-center gap-x-5 gap-y-2 sm:mb-6 sm:grid-cols-[auto_0.65fr_1.3fr_auto] sm:gap-6 md:mb-8 md:gap-8">
-          <span className="row-span-2 text-[clamp(3rem,8vw,116px)] font-black leading-none tracking-tight sm:row-span-1">
-            {project.number}
-          </span>
-          <p className="self-end text-xs font-light uppercase tracking-[0.24em] opacity-60 sm:self-center sm:text-sm md:text-base">
-            {project.category}
-          </p>
-          <h3 className="col-start-2 text-[clamp(1.15rem,2.5vw,2.6rem)] font-medium uppercase leading-none sm:col-auto">
-            {project.name}
-          </h3>
-          <div className="col-span-2 mt-2 sm:col-span-1 sm:mt-0 sm:justify-self-end">
-            <LiveProjectButton
-              href={project.images[2]}
-              projectName={project.name}
-            />
-          </div>
-        </div>
-
-        <div className="project-media-grid grid grid-cols-[0.4fr_0.6fr] gap-2 sm:gap-3 md:gap-4">
-          <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
-            <img
-              src={project.images[0]}
-              alt={`${project.name} detail one`}
-              loading="lazy"
-              decoding="async"
-              className="project-image-small h-[clamp(130px,16vw,230px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
-            />
-            <img
-              src={project.images[1]}
-              alt={`${project.name} detail two`}
-              loading="lazy"
-              decoding="async"
-              className="project-image-large h-[clamp(160px,22vw,340px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
-            />
-          </div>
-          <img
-            src={project.images[2]}
-            alt={`${project.name} main view`}
-            loading="lazy"
-            decoding="async"
-            className="project-image-main h-full min-h-0 w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
+      <div className="mb-4 grid grid-cols-[auto_1fr] items-center gap-x-5 gap-y-2 sm:mb-6 sm:grid-cols-[auto_0.65fr_1.3fr_auto] sm:gap-6 md:mb-8 md:gap-8">
+        <span className="row-span-2 text-[clamp(3rem,8vw,116px)] font-black leading-none tracking-tight sm:row-span-1">
+          {project.number}
+        </span>
+        <p className="self-end text-xs font-light uppercase tracking-[0.24em] opacity-60 sm:self-center sm:text-sm md:text-base">
+          {project.category}
+        </p>
+        <h3 className="col-start-2 text-[clamp(1.15rem,2.5vw,2.6rem)] font-medium uppercase leading-none sm:col-auto">
+          {project.name}
+        </h3>
+        <div className="col-span-2 mt-2 sm:col-span-1 sm:mt-0 sm:justify-self-end">
+          <LiveProjectButton
+            href={project.images[2]}
+            projectName={project.name}
           />
         </div>
-      </motion.article>
-    </div>
+      </div>
+
+      <div className="project-media-grid grid grid-cols-[0.4fr_0.6fr] gap-2 sm:gap-3 md:gap-4">
+        <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
+          <img
+            src={project.images[0]}
+            alt={`${project.name} detail one`}
+            loading="lazy"
+            decoding="async"
+            className="project-image-small h-[clamp(130px,16vw,230px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
+          />
+          <img
+            src={project.images[1]}
+            alt={`${project.name} detail two`}
+            loading="lazy"
+            decoding="async"
+            className="project-image-large h-[clamp(160px,22vw,340px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
+          />
+        </div>
+        <img
+          src={project.images[2]}
+          alt={`${project.name} main view`}
+          loading="lazy"
+          decoding="async"
+          className="project-image-main h-full min-h-0 w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
+        />
+      </div>
+    </motion.article>
   );
 }
 
 function ProjectsSection() {
+  const stackRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: stackRef,
+    offset: ["start start", "end end"],
+  });
+
   return (
     <section
       id="projects"
@@ -663,13 +670,17 @@ function ProjectsSection() {
         </h2>
       </FadeIn>
 
-      <div className="mx-auto max-w-[1480px]">
+      <div
+        ref={stackRef}
+        className="project-card-stack mx-auto max-w-[1480px]"
+      >
         {projects.map((project, index) => (
           <ProjectCard
             key={project.number}
             project={project}
             index={index}
             totalCards={projects.length}
+            stackProgress={scrollYProgress}
           />
         ))}
       </div>

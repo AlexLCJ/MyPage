@@ -55,6 +55,8 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   assert.match(layout, /Jack -- 3D Creator/);
   assert.match(globals, /@layer base/);
   assert.match(globals, /max-height:\s*640px/);
+  assert.match(globals, /\.project-card-stack/);
+  assert.match(globals, /\.project-stack-card:not\(:last-child\)/);
   assert.match(globals, /\.project-media-grid/);
   assert.match(packageJson, /"framer-motion"/);
   assert.match(packageJson, /"lucide-react"/);

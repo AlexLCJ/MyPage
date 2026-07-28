@@ -149,6 +149,14 @@ nav a:focus-visible {
   transform-origin: top center;
 }
 
+.project-card-stack {
+  padding-bottom: 28vh;
+}
+
+.project-stack-card:not(:last-child) {
+  margin-bottom: 16vh;
+}
+
 .project-media-grid {
   --project-image-small: clamp(130px, 16vw, 230px);
   --project-image-large: clamp(160px, 22vw, 340px);
@@ -313,10 +321,12 @@ nav a:focus-visible {
     font-size: 0.7rem;
   }
 
-  .project-card-shell {
-    height: auto;
-    min-height: 0;
-    padding-bottom: 2rem;
+  .project-card-stack {
+    padding-bottom: 0;
+  }
+
+  .project-stack-card:not(:last-child) {
+    margin-bottom: 2rem;
   }
 
   .project-card-sticky {
