@@ -304,9 +304,12 @@ function HeroSection({
                 stroke={false}
                 width
                 weight
+                minWeight={320}
+                maxWeight={1000}
                 italic={false}
                 scale={false}
                 textColor="#AAB8C2"
+                className="hero-text-pressure-intro-title"
                 minFontSize={28}
               />
             </div>
@@ -320,6 +323,8 @@ function HeroSection({
                 stroke={false}
                 width
                 weight
+                minWeight={200}
+                maxWeight={950}
                 italic={false}
                 scale={false}
                 textColor="#AAB8C2"

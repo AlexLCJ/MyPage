@@ -22,6 +22,8 @@ type TextPressureProps = {
   fontUrl?: string;
   width?: boolean;
   weight?: boolean;
+  minWeight?: number;
+  maxWeight?: number;
   italic?: boolean;
   alpha?: boolean;
   flex?: boolean;
@@ -62,6 +64,8 @@ export default function TextPressure({
   fontUrl = "https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap",
   width = true,
   weight = true,
+  minWeight = 200,
+  maxWeight = 950,
   italic = true,
   alpha = false,
   flex = true,
@@ -93,14 +97,27 @@ export default function TextPressure({
 
     const { left, top, width: containerWidth, height } =
       container.getBoundingClientRect();
+    const visibleCharacters = characterRefs.current.filter(
+      (character): character is HTMLSpanElement =>
+        Boolean(character?.textContent?.trim()),
+    );
+    const firstCharacter = visibleCharacters[0];
+    const lastCharacter =
+      visibleCharacters[visibleCharacters.length - 1];
+    const firstCharacterRect = firstCharacter?.getBoundingClientRect();
+    const lastCharacterRect = lastCharacter?.getBoundingClientRect();
+    const contentCenterX =
+      !flex && firstCharacterRect && lastCharacterRect
+        ? (firstCharacterRect.left + lastCharacterRect.right) / 2
+        : left + containerWidth / 2;
     const center = {
-      x: left + containerWidth / 2,
+      x: contentCenterX,
       y: top + height / 2,
     };
 
     pointerRef.current = center;
     animatedPointerRef.current = center;
-  }, []);
+  }, [flex]);
 
   const setSize = useCallback(() => {
     const container = containerRef.current;
@@ -228,7 +245,12 @@ export default function TextPressure({
             : 100;
           const characterWeight = weight
             ? Math.floor(
-                getAttributeValue(pointerDistance, maxDistance, 100, 900),
+                getAttributeValue(
+                  pointerDistance,
+                  maxDistance,
+                  minWeight,
+                  maxWeight,
+                ),
               )
             : 400;
           const characterItalic = italic
@@ -265,7 +287,7 @@ export default function TextPressure({
 
     animate();
     return () => cancelAnimationFrame(frameId);
-  }, [alpha, italic, weight, width]);
+  }, [alpha, italic, maxWeight, minWeight, weight, width]);
 
   const fontImport = useMemo(
     () => (

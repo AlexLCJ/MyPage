@@ -104,6 +104,10 @@ img {
   margin-left: clamp(1rem, 3vw, 3rem);
 }
 
+.hero-text-pressure-intro .hero-text-pressure-intro-title {
+  text-align: left;
+}
+
 .hero-text-pressure-name {
   width: min(90vw, 81rem);
   margin-right: clamp(1rem, 3vw, 3rem);
