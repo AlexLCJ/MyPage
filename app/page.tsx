@@ -17,6 +17,7 @@ import {
 } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import InlineContactLanyard from "@/components/ContactExperience/InlineContactLanyard";
+import FallingText from "@/components/FallingText/FallingText";
 import TextPressure from "@/components/TextPressure/TextPressure";
 
 const CONTACT_EMAIL = "hello@changjunli.design";
@@ -356,10 +357,21 @@ function HeroSection({
 
       <div className="hero-bottom-bar relative z-20 mt-auto flex items-end justify-between gap-8 px-6 pb-7 sm:pb-8 md:px-10 md:pb-10">
         <FadeIn delay={0.35} y={20}>
-          <p className="hero-copy max-w-[160px] text-[clamp(0.75rem,1.4vw,1.5rem)] font-light uppercase leading-snug tracking-wide text-[#D7E2EA] sm:max-w-[220px] md:max-w-[260px]">
-            A 3D creator driven by crafting striking and unforgettable
-            projects
-          </p>
+          <FallingText
+            className="hero-roles"
+            text={`Enterprise AI Product Manager
+Researcher
+Amateur Pianist`}
+            highlightWords={["AI", "Researcher", "Pianist"]}
+            highlightClass="hero-role-highlight"
+            trigger="hover"
+            backgroundColor="transparent"
+            wireframes={false}
+            gravity={0.56}
+            fontSize="clamp(0.62rem, 1.2vw, 1.2rem)"
+            wordSpacing="0.28em"
+            mouseConstraintStiffness={0.9}
+          />
         </FadeIn>
         <FadeIn delay={0.5} y={20}>
           <ContactButton />

@@ -113,6 +113,20 @@ img {
   width: 54vw;
 }
 
+.hero-roles.hero-roles {
+  width: clamp(17rem, 30vw, 30rem);
+  height: clamp(6.5rem, 10vw, 9rem);
+  color: #d7e2ea;
+  font-weight: 300;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.hero-roles.hero-roles .hero-role-highlight {
+  color: #ffffff;
+  font-weight: 600;
+}
+
 .contact-button,
 .live-project-button {
   display: inline-flex;
@@ -316,10 +330,9 @@ nav button:focus-visible {
     padding-bottom: 1rem;
   }
 
-  .hero-copy {
-    max-width: 108px;
-    font-size: 0.62rem;
-    line-height: 1.15;
+  .hero-roles.hero-roles {
+    width: 42vw;
+    height: 5.8rem;
   }
 
   .hero-bottom-bar .contact-button {
@@ -364,9 +377,9 @@ nav button:focus-visible {
     padding-bottom: 1rem;
   }
 
-  .hero-copy {
-    max-width: 180px;
-    font-size: clamp(0.62rem, 1.3vw, 0.72rem);
+  .hero-roles.hero-roles {
+    width: min(36vw, 17rem);
+    height: 5.5rem;
   }
 
   .hero-bottom-bar .contact-button {

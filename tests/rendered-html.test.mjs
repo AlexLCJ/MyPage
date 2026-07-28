@@ -37,6 +37,10 @@ test("server-renders the finished portfolio", async () => {
     /aria-label="Hi, I(?:&#x27;|&apos;|')m Changjun Li"/i,
   );
   assert.match(html, /About Me/i);
+  assert.match(
+    html,
+    /aria-label="Enterprise AI Product Manager, Researcher, Amateur Pianist"/i,
+  );
   assert.match(html, /Services/i);
   assert.match(html, /Nextlevel Studio/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
