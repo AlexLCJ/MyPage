@@ -18,6 +18,7 @@ import { ArrowUpRight } from "lucide-react";
 import InlineContactLanyard from "@/components/ContactExperience/InlineContactLanyard";
 import GradientText from "@/components/GradientText/GradientText";
 import TextPressure from "@/components/TextPressure/TextPressure";
+import Waves from "@/components/Waves/Waves";
 
 const CONTACT_EMAIL = "hello@changjunli.design";
 
@@ -207,6 +208,21 @@ function HeroSection({
       id="top"
       className="hero-section relative flex h-screen min-h-[620px] flex-col overflow-x-clip bg-[#0C0C0C]"
     >
+      <Waves
+        className="hero-waves"
+        lineColor="rgba(123, 151, 171, 0.24)"
+        backgroundColor="#0C0C0C"
+        waveSpeedX={0.015}
+        waveSpeedY={0.006}
+        waveAmpX={30}
+        waveAmpY={14}
+        xGap={14}
+        yGap={30}
+        friction={0.92}
+        tension={0.006}
+        maxCursorMove={80}
+      />
+
       <FadeIn
         as="nav"
         className="hero-nav relative z-[70] flex justify-between px-6 pt-6 text-sm font-medium tracking-wider text-[#D7E2EA] md:px-10 md:pt-8 md:text-lg lg:text-[1.4rem]"
@@ -236,7 +252,7 @@ function HeroSection({
         )}
       </FadeIn>
 
-      <div className="hero-heading-wrap mt-6 overflow-hidden sm:mt-4 md:-mt-5">
+      <div className="hero-heading-wrap relative z-20 mt-6 overflow-hidden sm:mt-4 md:-mt-5">
         <FadeIn delay={0.15} y={40}>
           <div className="hero-text-pressure-stack">
             <div className="hero-text-pressure hero-text-pressure-intro">

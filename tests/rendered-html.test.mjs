@@ -47,19 +47,24 @@ test("server-renders the finished portfolio", async () => {
 });
 
 test("removes the disposable starter and keeps portfolio metadata", async () => {
-  const [page, layout, globals, lanyardStyles, packageJson] = await Promise.all([
-    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
-    readFile(
-      new URL(
-        "../components/ContactExperience/InlineContactLanyard.css",
-        import.meta.url,
+  const [page, layout, globals, lanyardStyles, waves, packageJson] =
+    await Promise.all([
+      readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+      readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+      readFile(
+        new URL(
+          "../components/ContactExperience/InlineContactLanyard.css",
+          import.meta.url,
+        ),
+        "utf8",
       ),
-      "utf8",
-    ),
-    readFile(new URL("../package.json", import.meta.url), "utf8"),
-  ]);
+      readFile(
+        new URL("../components/Waves/Waves.tsx", import.meta.url),
+        "utf8",
+      ),
+      readFile(new URL("../package.json", import.meta.url), "utf8"),
+    ]);
 
   assert.match(page, /function HeroSection/);
   assert.match(page, /function MarqueeSection/);
@@ -67,6 +72,7 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   assert.match(page, /function ServicesSection/);
   assert.match(page, /function ProjectsSection/);
   assert.match(page, /InlineContactLanyard/);
+  assert.match(page, /<Waves/);
   assert.match(page, /useState\(true\)/);
   assert.match(page, /TextPressure/);
   assert.match(page, /GradientText/);
@@ -80,6 +86,8 @@ test("removes the disposable starter and keeps portfolio metadata", async () => 
   assert.match(globals, /\.project-media-grid/);
   assert.match(lanyardStyles, /inset:\s*0/);
   assert.doesNotMatch(lanyardStyles, /520px|inline-lanyard-glow/);
+  assert.match(waves, /requestAnimationFrame/);
+  assert.match(waves, /prefers-reduced-motion/);
   assert.match(packageJson, /"framer-motion"/);
   assert.match(packageJson, /"lucide-react"/);
   assert.match(packageJson, /"@react-three\/fiber"/);
