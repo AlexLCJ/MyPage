@@ -210,7 +210,7 @@ function HeroSection({
     >
       <Waves
         className="hero-waves"
-        lineColor="rgba(123, 151, 171, 0.24)"
+        lineColor="#b8b8b8"
         backgroundColor="#0C0C0C"
         waveSpeedX={0.015}
         waveSpeedY={0.006}
