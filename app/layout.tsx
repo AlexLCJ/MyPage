@@ -20,13 +20,16 @@ export async function generateMetadata(): Promise<Metadata> {
     incomingHeaders.get("x-forwarded-proto") ??
     (host.includes("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
-  const title = "Changjun Li -- 3D Creator";
+  const title = "Changjun Li -- Double-Degree Student & AI Researcher";
   const description =
-    "Changjun Li's portfolio featuring 3D visuals, motion design, branding, and web design projects.";
+    "Changjun Li's art-directed portfolio exploring AI products, research, systems, music, and visual culture.";
 
   return {
     title,
     description,
+    icons: {
+      icon: "/favicon.svg",
+    },
     openGraph: {
       title,
       description,

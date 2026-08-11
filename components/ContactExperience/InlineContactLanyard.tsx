@@ -46,19 +46,17 @@ export default function InlineContactLanyard({
   const profileCard = (
     <ProfileCard
       name="Changjun Li"
-      title="李昌峻 · 3D CREATOR"
+      title="李昌峻 · STUDENT & AI RESEARCHER"
       handle="changjunli"
       status="AVAILABLE"
       contactText="CONTACT"
       avatarUrl={PROFILE_AVATAR}
       miniAvatarUrl={PROFILE_AVATAR}
       showUserInfo
+      contactHref={`mailto:${email}`}
       enableTilt={false}
       behindGlowEnabled={false}
       innerGradient="linear-gradient(145deg, rgba(4, 5, 8, 0.52) 0%, rgba(41, 55, 76, 0.36) 48%, rgba(61, 31, 74, 0.48) 100%)"
-      onContactClick={() => {
-        window.location.href = `mailto:${email}`;
-      }}
     />
   );
 

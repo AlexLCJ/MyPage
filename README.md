@@ -1,7 +1,7 @@
-# Changjun Li — 3D Creator
+# Changjun Li — Double-Degree Student & AI Researcher
 
-A responsive, motion-rich 3D creator portfolio built as a reusable personal
-site framework.
+A responsive, motion-rich personal portfolio for AI products, research, and
+the arts.
 
 ## What is included
 

@@ -1,0 +1,231 @@
+.scroll-expand {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #0c0c0c;
+}
+
+.scroll-expand--scroller {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-expand--scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-expand__track {
+  position: relative;
+  width: 100%;
+}
+
+.scroll-expand__stage {
+  --se-title-size: 4rem;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  background: #0c0c0c;
+}
+
+.scroll-expand__frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: inset(21% 29% 21% 29% round 24px);
+  -webkit-clip-path: inset(21% 29% 21% 29% round 24px);
+  will-change: clip-path;
+  transform: translateZ(0);
+}
+
+.scroll-expand__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: center;
+  user-select: none;
+  -webkit-user-drag: none;
+  will-change: transform;
+}
+
+.scroll-expand__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.1) 66%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.76), transparent 55%, rgba(0, 0, 0, 0.28));
+  opacity: 0;
+}
+
+.scroll-expand__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(1.5rem, 7vw, 8rem);
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.scroll-expand__title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6%;
+  color: #eef4f8;
+  font-size: var(--se-title-size);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+  text-align: center;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.scroll-expand__hint {
+  position: absolute;
+  right: clamp(1.5rem, 4vw, 4rem);
+  bottom: clamp(1.5rem, 4vw, 3rem);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(238, 244, 248, 0.7);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.scroll-expand__hint-line {
+  width: 2.5rem;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  animation: scroll-expand-pulse 1.8s ease-in-out infinite;
+}
+
+.about-scroll-expand .scroll-expand__media {
+  object-position: 50% 32%;
+  filter: contrast(1.03);
+}
+
+.about-scroll-expand__content {
+  width: min(43rem, 100%);
+}
+
+.about-scroll-expand__eyebrow {
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  color: rgba(238, 244, 248, 0.72);
+  font-size: clamp(0.68rem, 1vw, 0.82rem);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.about-scroll-expand__heading {
+  max-width: 12ch;
+  color: #f2f5f7;
+  font-size: clamp(2.25rem, 5.3vw, 5.8rem);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+}
+
+.about-scroll-expand__copy {
+  display: grid;
+  max-width: 42rem;
+  gap: 0.7rem;
+  margin-top: clamp(1.25rem, 2.6vw, 2rem);
+  color: rgba(238, 244, 248, 0.82);
+  font-size: clamp(0.9rem, 1.3vw, 1.08rem);
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.about-scroll-expand__roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: clamp(1.25rem, 2.6vw, 2rem);
+  list-style: none;
+}
+
+.about-scroll-expand__roles li {
+  border: 1px solid rgba(238, 244, 248, 0.32);
+  border-radius: 999px;
+  padding: 0.48rem 0.76rem;
+  color: rgba(238, 244, 248, 0.88);
+  font-size: clamp(0.62rem, 0.9vw, 0.75rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.about-scroll-expand__action {
+  margin-top: clamp(1.5rem, 3vw, 2.3rem);
+}
+
+@keyframes scroll-expand-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scaleX(0.55);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .scroll-expand__overlay {
+    justify-content: flex-end;
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+  }
+
+  .about-scroll-expand .scroll-expand__media {
+    object-position: 54% 30%;
+  }
+
+  .about-scroll-expand__heading {
+    max-width: 11ch;
+  }
+
+  .about-scroll-expand__copy p:last-child {
+    display: none;
+  }
+
+  .about-scroll-expand__roles {
+    gap: 0.4rem;
+  }
+
+  .scroll-expand__hint {
+    right: 50%;
+    transform: translateX(50%);
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-expand__hint-line {
+    animation: none;
+  }
+}

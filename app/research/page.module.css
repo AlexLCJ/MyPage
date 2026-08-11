@@ -1,0 +1,165 @@
+.page {
+  min-height: 100svh;
+  padding: clamp(1.25rem, 3vw, 3rem);
+  color: #d7e2ea;
+  background:
+    radial-gradient(circle at 82% 4%, rgba(143, 216, 255, 0.08), transparent 26rem),
+    #0c0c0c;
+}
+
+.header {
+  display: grid;
+  min-height: min(72svh, 50rem);
+  grid-template-rows: auto 1fr;
+  border-top: 1px solid rgba(215, 226, 234, 0.32);
+}
+
+.backLink {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+  color: rgba(215, 226, 234, 0.72);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: color 180ms ease;
+}
+
+.backLink:hover {
+  color: #ffffff;
+}
+
+.backLink:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 5px;
+}
+
+.intro {
+  display: grid;
+  align-content: end;
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 30rem);
+  gap: 2rem;
+  padding-block: clamp(5rem, 10vw, 10rem) clamp(3.5rem, 7vw, 6rem);
+}
+
+.eyebrow {
+  grid-column: 1 / -1;
+  color: #8fd8ff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.intro h1 {
+  grid-column: 1 / -1;
+  font-size: clamp(5rem, 16vw, 15rem);
+  font-weight: 800;
+  line-height: 0.7;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+}
+
+.summary {
+  grid-column: 2;
+  justify-self: end;
+  align-self: end;
+  max-width: 32rem;
+  color: rgba(215, 226, 234, 0.68);
+  font-size: clamp(1rem, 1.35vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.gallery {
+  display: grid;
+  gap: clamp(5rem, 10vw, 10rem);
+  padding-bottom: clamp(5rem, 10vw, 10rem);
+}
+
+.plate {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.imageFrame {
+  overflow: hidden;
+  border: 1px solid rgba(215, 226, 234, 0.26);
+  background: #ffffff;
+}
+
+.imageFrame img {
+  width: 100%;
+  height: auto;
+}
+
+.caption {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  gap: 1rem;
+  border-top: 1px solid rgba(215, 226, 234, 0.24);
+  padding-top: 1rem;
+}
+
+.number {
+  color: #8fd8ff;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+}
+
+.captionText {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.captionText strong {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.captionText > span {
+  color: rgba(215, 226, 234, 0.58);
+  font-size: 0.9rem;
+  font-weight: 300;
+  text-align: right;
+}
+
+@media (max-width: 760px) {
+  .header {
+    min-height: 70svh;
+  }
+
+  .intro {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .intro h1 {
+    font-size: clamp(4rem, 23vw, 7rem);
+  }
+
+  .summary {
+    grid-column: 1;
+    justify-self: start;
+    max-width: 28rem;
+  }
+
+  .caption {
+    grid-template-columns: 2.5rem 1fr;
+  }
+
+  .captionText {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .captionText > span {
+    text-align: left;
+  }
+}

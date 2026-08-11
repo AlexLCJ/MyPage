@@ -80,6 +80,41 @@ img {
   mix-blend-mode: soft-light;
 }
 
+.image-trail-section {
+  position: relative;
+  height: 600px;
+  overflow: hidden;
+  background: #0c0c0c;
+  isolation: isolate;
+}
+
+.image-trail-prompt {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  opacity: 0.46;
+  pointer-events: none;
+}
+
+.work-section {
+  position: relative;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  background: #0c0c0c;
+  isolation: isolate;
+  scroll-margin-top: 1rem;
+}
+
+.work-section__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .hero-heading {
   background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
   background-clip: text;
@@ -142,8 +177,7 @@ img {
   font-weight: 700;
 }
 
-.contact-button,
-.live-project-button {
+.contact-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -160,141 +194,105 @@ img {
     opacity 200ms ease;
 }
 
+.contact-button-effect {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  width: 22rem;
+  height: 7rem;
+  margin-left: -4rem;
+  place-items: center;
+  overflow: visible;
+}
+
 .contact-button {
-  padding: 0.75rem 2rem;
-  color: #ffffff;
+  position: relative;
+  z-index: 1;
+  width: 11.375rem;
+  height: 3.625rem;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  color: #eef4f8;
   font-size: 0.75rem;
-  outline: 2px solid #ffffff;
-  outline-offset: -3px;
-  background: linear-gradient(
-    123deg,
-    #18011f 7%,
-    #b600a8 37%,
-    #7621b0 72%,
-    #be4c00 100%
-  );
-  box-shadow:
-    0 4px 4px rgba(181, 1, 167, 0.25),
-    4px 4px 12px #7721b1 inset;
+  background: transparent;
+  box-shadow: none;
 }
 
-.contact-button:hover,
-.live-project-button:hover {
-  transform: translateY(-2px);
+.contact-button__shape {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 30rem;
+  height: 14rem;
+  pointer-events: none;
 }
 
-.contact-button:hover {
-  filter: brightness(1.08);
+.contact-button__shape canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
-.live-project-button {
-  border: 2px solid #d7e2ea;
-  padding: 0.75rem 2rem;
-  color: #d7e2ea;
-  font-size: 0.875rem;
-}
-
-.live-project-button:hover {
-  background: rgba(215, 226, 234, 0.1);
+.contact-button__label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .contact-button:focus-visible,
-.live-project-button:focus-visible,
 nav a:focus-visible,
 nav button:focus-visible {
   outline: 3px solid #ffffff;
   outline-offset: 5px;
 }
 
-.project-card-sticky {
-  top: calc(6rem + var(--card-offset));
-  transform-origin: top center;
-}
-
-.project-card-stack {
-  padding-bottom: 28vh;
-}
-
-.project-stack-card:not(:last-child) {
-  margin-bottom: 16vh;
-}
-
-.project-media-grid {
-  --project-image-small: clamp(130px, 16vw, 230px);
-  --project-image-large: clamp(160px, 22vw, 340px);
-  --project-media-gap: 0.5rem;
-  height: calc(
-    var(--project-image-small) + var(--project-image-large) +
-      var(--project-media-gap)
-  );
-}
-
-.project-image-small {
-  height: var(--project-image-small);
-}
-
-.project-image-large {
-  height: var(--project-image-large);
-}
-
-.project-image-main {
-  height: 100%;
-}
-
-@media (min-height: 641px) {
-  .project-media-grid {
-    --project-image-small: max(
-      110px,
-      min(clamp(130px, 16vw, 230px), 18vh)
-    );
-    --project-image-large: max(
-      150px,
-      min(clamp(160px, 22vw, 340px), 28vh)
-    );
-  }
-}
-
 @media (min-width: 640px) {
-  .project-media-grid {
-    --project-media-gap: 0.75rem;
+  .contact-button-effect {
+    width: 25rem;
+    height: 8rem;
+    margin-left: -4.5rem;
+  }
+
+  .contact-button__shape {
+    width: 40rem;
+    height: 16rem;
   }
 
   .contact-button {
-    padding: 0.875rem 2.5rem;
-    font-size: 0.875rem;
-  }
-
-  .live-project-button {
-    padding: 0.875rem 2.5rem;
-    font-size: 1rem;
+    width: 13rem;
+    height: 4.125rem;
+    font-size: 0.8rem;
   }
 }
 
 @media (min-width: 768px) {
-  .project-media-grid {
-    --project-media-gap: 1rem;
+  .contact-button-effect {
+    width: 28rem;
+    height: 9rem;
+    margin-left: -5rem;
+  }
+
+  .contact-button__shape {
+    width: 48rem;
+    height: 18rem;
   }
 
   .contact-button {
-    padding: 1rem 3rem;
-    font-size: 1rem;
-  }
-
-  .project-card-sticky {
-    top: calc(8rem + var(--card-offset));
+    width: 14.625rem;
+    height: 4.625rem;
+    font-size: 0.875rem;
   }
 }
 
 @media (max-width: 639px) {
-  .contact-button,
-  .live-project-button {
+  .contact-button {
     gap: 0.25rem;
     letter-spacing: 0.11em;
-  }
-
-  .live-project-button {
-    padding-inline: 1.15rem;
-    font-size: 0.72rem;
   }
 }
 
@@ -378,20 +376,6 @@ nav button:focus-visible {
   .hero-bottom-bar .contact-button {
     padding: 0.7rem 1.6rem;
     font-size: 0.7rem;
-  }
-
-  .project-card-stack {
-    padding-bottom: 0;
-  }
-
-  .project-stack-card:not(:last-child) {
-    margin-bottom: 2rem;
-  }
-
-  .project-card-sticky {
-    position: relative;
-    top: auto;
-    transform: none !important;
   }
 }
 

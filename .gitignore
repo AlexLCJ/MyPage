@@ -12,6 +12,9 @@
 
 # testing
 /coverage
+/.playwright-cli/
+/output/
+/tmp/
 
 # next.js
 /.next/
@@ -41,5 +44,8 @@ next-env.d.ts
 /outputs/
 /work/
 *.tsbuildinfo
+
+# Local source/reference assets (deployable copies live in /public/assets)
+/Assert/
 vite.config.js
 vite.config.d.ts

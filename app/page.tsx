@@ -3,112 +3,64 @@
 import {
   type CSSProperties,
   type ReactNode,
-  useEffect,
-  useRef,
+  useLayoutEffect,
   useState,
 } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  type MotionStyle,
-  type MotionValue,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import InlineContactLanyard from "@/components/ContactExperience/InlineContactLanyard";
+import ArtsSection from "@/components/ArtsSection/ArtsSection";
+import EchoText from "@/components/EchoText/EchoText";
 import GradientText from "@/components/GradientText/GradientText";
+import ImageTrail from "@/components/ImageTrail/ImageTrail";
+import InfiniteMenu from "@/components/InfiniteMenu/InfiniteMenu";
+import ScrollExpand from "@/components/ScrollExpand/ScrollExpand";
+import ShapeBlur from "@/components/ShapeBlur/ShapeBlur";
 import TextPressure from "@/components/TextPressure/TextPressure";
 import Waves from "@/components/Waves/Waves";
 
-const CONTACT_EMAIL = "hello@changjunli.design";
+const CONTACT_EMAIL = "AlexCJLi@163.com";
 
-const marqueeImages = [
-  "https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif",
-  "https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif",
-  "https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif",
-  "https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif",
-  "https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif",
-  "https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif",
-  "https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif",
-  "https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif",
-  "https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif",
-  "https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif",
-  "https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif",
-  "https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif",
-  "https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif",
-  "https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif",
-  "https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif",
-  "https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif",
-  "https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif",
-  "https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif",
-  "https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif",
-  "https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif",
-  "https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif",
+const trailImages = [
+  "/assets/image-trail/1.jpg",
+  "/assets/image-trail/2.jpg",
+  "/assets/image-trail/3.jpg",
+  "/assets/image-trail/4.jpg",
+  "/assets/image-trail/5.jpg",
+  "/assets/image-trail/6.jpg",
+  "/assets/image-trail/7.jpg",
+  "/assets/image-trail/8.jpg",
 ];
 
-const services = [
+const workItems = [
   {
-    number: "01",
-    name: "3D Modeling",
+    image: "/assets/work/publication.png",
+    link: "https://scholar.google.com/citations?user=_3XFLicAAAAJ&hl=zh-CN",
+    title: "Publication",
     description:
-      "Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations.",
+      "A JCR Q1 study combining granular-ball computing with BiLSTM forecasting across nine financial datasets.",
   },
   {
-    number: "02",
-    name: "Rendering",
+    image: "/assets/work/research-cover.png",
+    link: "/research",
+    title: "Research",
     description:
-      "High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life.",
+      "Rough sets, image forensics, financial forecasting, and head-mounted 3D reconstruction.",
   },
   {
-    number: "03",
-    name: "Motion Design",
+    image: "/assets/work/research-ai-products.png",
+    link: "/projects",
+    title: "Projects",
     description:
-      "Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences.",
+      "AI-native education workflows and a modular JVM bytecode protection platform.",
   },
   {
-    number: "04",
-    name: "Branding",
+    image:
+      "https://images.unsplash.com/photo-1781242629922-6f39cc3671cd?q=80&w=600&h=600&fit=crop&sat=-100&auto=format",
+    link: "https://www.linkedin.com/in/昌峻-李/",
+    title: "Internship Experience",
     description:
-      "Crafting cohesive visual identities — from logos to full brand systems — that communicate a clear and memorable presence.",
-  },
-  {
-    number: "05",
-    name: "Web Design",
-    description:
-      "Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience.",
-  },
-];
-
-const projects = [
-  {
-    number: "01",
-    category: "Client",
-    name: "Nextlevel Studio",
-    images: [
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85",
-    ],
-  },
-  {
-    number: "02",
-    category: "Personal",
-    name: "Aura Brand Identity",
-    images: [
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85",
-    ],
-  },
-  {
-    number: "03",
-    category: "Client",
-    name: "Solaris Digital",
-    images: [
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85",
-      "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85",
-    ],
+      "AI product management and fintech algorithm engineering—Qwen knowledge graphs, multi-agent Text2SQL, and customer analytics.",
   },
 ];
 
@@ -155,35 +107,32 @@ function FadeIn({
 
 function ContactButton() {
   return (
-    <a
-      className="contact-button"
-      href={`mailto:${CONTACT_EMAIL}`}
-      aria-label="Contact Changjun Li by email"
-    >
-      <span>Contact Me</span>
-      <ArrowUpRight aria-hidden="true" size={18} strokeWidth={2.2} />
-    </a>
-  );
-}
-
-function LiveProjectButton({
-  href,
-  projectName,
-}: {
-  href: string;
-  projectName: string;
-}) {
-  return (
-    <a
-      className="live-project-button"
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={`View the ${projectName} project`}
-    >
-      <span>Live Project</span>
-      <ArrowUpRight aria-hidden="true" size={18} strokeWidth={2} />
-    </a>
+    <div className="contact-button-effect">
+      <ShapeBlur
+        className="contact-button__shape"
+        variation={0}
+        shapeSize={0.54}
+        shapeAspect={3.15}
+        shapeAnchorX={0.78}
+        shapeAnchorY={0.25}
+        pointerProjectionRight={0.04}
+        pointerProjectionBottom={0.04}
+        roundness={0.31}
+        borderSize={0.0275}
+        circleSize={0.22}
+        circleEdge={0.42}
+      />
+      <a
+        className="contact-button"
+        href={`mailto:${CONTACT_EMAIL}`}
+        aria-label="Contact Changjun Li by email"
+      >
+        <span className="contact-button__label">
+          <span>Contact Me</span>
+          <ArrowUpRight aria-hidden="true" size={17} strokeWidth={2} />
+        </span>
+      </a>
+    </div>
   );
 }
 
@@ -198,8 +147,8 @@ function HeroSection({
 }) {
   const navigationItems = [
     { label: "About", href: "#about" },
-    { label: "Price", href: "#services" },
-    { label: "Projects", href: "#projects" },
+    { label: "Works", href: "#projects" },
+    { label: "Arts", href: "#arts" },
     { label: "Contact", onClick: onContactToggle },
   ];
 
@@ -296,7 +245,7 @@ function HeroSection({
         </FadeIn>
       </div>
 
-      <div className="hero-bottom-bar relative z-20 mt-auto flex items-end justify-between gap-8 px-6 pb-7 sm:pb-8 md:px-10 md:pb-10">
+      <div className="hero-bottom-bar relative z-20 mt-auto flex items-end justify-start gap-8 px-6 pb-7 sm:pb-8 md:px-10 md:pb-10">
         <FadeIn delay={0.35} y={20}>
           <GradientText
             className="hero-roles"
@@ -312,23 +261,20 @@ function HeroSection({
             pauseOnHover
             yoyo={false}
             showBorder={false}
-            ariaLabel="Enterprise AI Product Manager, Researcher, Amateur Pianist"
+            ariaLabel="CQUPT Double-Degree Student, AI Researcher, AI Product Experience"
           >
             <span className="hero-role-lines">
               <span className="hero-role-line">
-                Enterprise <strong>AI</strong> Product Manager
+                CQUPT <strong>Double-Degree</strong> Student
               </span>
               <span className="hero-role-line">
-                <strong>Researcher</strong>
+                <strong>AI Researcher</strong>
               </span>
               <span className="hero-role-line">
-                Amateur <strong>Pianist</strong>
+                AI Product <strong>Experience</strong>
               </span>
             </span>
           </GradientText>
-        </FadeIn>
-        <FadeIn delay={0.5} y={20}>
-          <ContactButton />
         </FadeIn>
       </div>
       <div id="inline-contact-lanyard">
@@ -342,368 +288,106 @@ function HeroSection({
   );
 }
 
-function MarqueeRow({
-  images,
-  direction,
-  offset,
-}: {
-  images: string[];
-  direction: "left" | "right";
-  offset: number;
-}) {
-  const translate = direction === "right" ? offset - 200 : -(offset - 200);
-  const tripledImages = [...images, ...images, ...images];
-
-  return (
-    <div className="overflow-hidden">
-      <div
-        className="flex w-max gap-3"
-        style={{
-          transform: `translate3d(${translate}px, 0, 0)`,
-          willChange: "transform",
-        }}
-      >
-        {tripledImages.map((src, index) => (
-          <img
-            key={`${src}-${index}`}
-            src={src}
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            className="h-[270px] w-[420px] shrink-0 rounded-2xl object-cover"
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function MarqueeSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [offset, setOffset] = useState(0);
-
-  useEffect(() => {
-    const updateOffset = () => {
-      const section = sectionRef.current;
-      if (!section) return;
-
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-      setOffset(
-        (window.scrollY - sectionTop + window.innerHeight) * 0.3,
-      );
-    };
-
-    updateOffset();
-    window.addEventListener("scroll", updateOffset, { passive: true });
-    window.addEventListener("resize", updateOffset);
-
-    return () => {
-      window.removeEventListener("scroll", updateOffset);
-      window.removeEventListener("resize", updateOffset);
-    };
-  }, []);
-
+function ImageTrailTransition() {
   return (
     <section
-      ref={sectionRef}
-      className="flex flex-col gap-3 overflow-hidden bg-[#0C0C0C] pb-10 pt-24 sm:pt-32 md:pt-40"
-      aria-label="Selected project motion previews"
+      id="image-trail"
+      className="image-trail-section"
+      aria-label="Interactive photo trail"
     >
-      <MarqueeRow
-        images={marqueeImages.slice(0, 11)}
-        direction="right"
-        offset={offset}
-      />
-      <MarqueeRow
-        images={marqueeImages.slice(11)}
-        direction="left"
-        offset={offset}
-      />
-    </section>
-  );
-}
-
-function AnimatedCharacter({
-  character,
-  index,
-  total,
-  progress,
-}: {
-  character: string;
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-}) {
-  const start = index / total;
-  const end = Math.min(start + 1 / total + 0.08, 1);
-  const opacity = useTransform(progress, [start, end], [0.2, 1]);
-  return (
-    <span className="relative inline" aria-hidden="true">
-      <span className="invisible">{character}</span>
-      <motion.span className="absolute inset-0" style={{ opacity }}>
-        {character}
-      </motion.span>
-    </span>
-  );
-}
-
-function AnimatedText({ text }: { text: string }) {
-  const paragraphRef = useRef<HTMLParagraphElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: paragraphRef,
-    offset: ["start 0.8", "end 0.2"],
-  });
-
-  return (
-    <p
-      ref={paragraphRef}
-      className="w-full max-w-[560px] text-center text-[clamp(1rem,2vw,1.35rem)] font-medium leading-relaxed text-[#D7E2EA]"
-      aria-label={text}
-    >
-      {Array.from(text).map((character, index) => (
-        <AnimatedCharacter
-          key={`${character}-${index}`}
-          character={character}
-          index={index}
-          total={text.length}
-          progress={scrollYProgress}
+      <p className="image-trail-prompt">
+        <EchoText
+          text="MOVE TO REVEAL"
+          echoes={10}
+          lag={0.2}
+          offset={28}
+          direction="right"
+          fade={0.7}
+          blur={2}
+          tint="#8fd8ff"
+          mode="both"
+          cursorRadius={520}
+          duration={900}
+          ease="ease-out"
+          fontSize="clamp(2.8rem, 8vw, 7rem)"
+          fontWeight={800}
+          color="#d7e2ea"
         />
-      ))}
-    </p>
+      </p>
+      <ImageTrail items={trailImages} variant="6" />
+    </section>
   );
 }
 
 function AboutSection() {
-  const aboutText =
-    "With more than five years of experience in design, I focus on branding, web design, and user experience. I truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!";
-
-  const decorations = [
-    {
-      src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png",
-      alt: "Metallic moon decoration",
-      className:
-        "absolute left-[1%] top-[4%] w-[120px] sm:left-[2%] sm:w-[160px] md:left-[4%] md:w-[210px]",
-      delay: 0.1,
-      x: -80,
-    },
-    {
-      src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png",
-      alt: "Abstract 3D decoration",
-      className:
-        "absolute bottom-[8%] left-[3%] w-[100px] sm:left-[6%] sm:w-[140px] md:left-[10%] md:w-[180px]",
-      delay: 0.25,
-      x: -80,
-    },
-    {
-      src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png",
-      alt: "Metallic block decoration",
-      className:
-        "absolute right-[1%] top-[4%] w-[120px] sm:right-[2%] sm:w-[160px] md:right-[4%] md:w-[210px]",
-      delay: 0.15,
-      x: 80,
-    },
-    {
-      src: "https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png",
-      alt: "Abstract 3D sculpture",
-      className:
-        "absolute bottom-[8%] right-[3%] w-[130px] sm:right-[6%] sm:w-[170px] md:right-[10%] md:w-[220px]",
-      delay: 0.3,
-      x: 80,
-    },
-  ];
-
   return (
     <section
       id="about"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0C0C0C] px-5 py-20 sm:px-8 md:px-10"
+      className="bg-[#0C0C0C]"
+      aria-label="About Changjun Li"
     >
-      {decorations.map((decoration) => (
-        <FadeIn
-          key={decoration.src}
-          className={`${decoration.className} pointer-events-none z-0`}
-          delay={decoration.delay}
-          duration={0.9}
-          x={decoration.x}
-          y={0}
-        >
-          <img
-            src={decoration.src}
-            alt={decoration.alt}
-            loading="lazy"
-            className="h-auto w-full select-none object-contain"
-            draggable={false}
-          />
-        </FadeIn>
-      ))}
-
-      <div className="relative z-10 flex w-full flex-col items-center">
-        <div className="flex w-full flex-col items-center gap-10 sm:gap-14 md:gap-16">
-          <FadeIn delay={0} y={40}>
-            <h2 className="hero-heading text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight">
-              About Me
-            </h2>
-          </FadeIn>
-          <AnimatedText text={aboutText} />
+      <ScrollExpand
+        className="about-scroll-expand"
+        src="/assets/changjun-li-profile.jpg"
+        alt="Black and white portrait of Changjun Li"
+        title="ABOUT ME"
+        scrollHint="Scroll to expand"
+        startWidth={44}
+        startHeight={62}
+        startRadius={28}
+        mediaZoom={1.18}
+        scrollDistance={1.15}
+        holdDistance={0.42}
+        smoothing={0.09}
+        overlayScrim={0.68}
+        useWindowScroll
+        aria-label="Scroll to reveal more about Changjun Li"
+      >
+        <div className="about-scroll-expand__content">
+          <p className="about-scroll-expand__eyebrow">
+            CQUPT · Double Degree · Class of 2027
+          </p>
+          <h2 className="about-scroll-expand__heading">
+            Studying intelligent systems. Building useful AI.
+          </h2>
+          <div className="about-scroll-expand__copy">
+            <p>
+              I&apos;m Changjun Li, a double-degree student at Chongqing
+              University of Posts and Telecommunications, studying Intelligent
+              Science and Technology alongside Mathematics and Applied
+              Mathematics. My path also includes applied AI research and
+              hands-on AI product work.
+            </p>
+            <p>
+              I&apos;ve published research on financial time-series forecasting
+              and worked as an AI product manager intern, building an
+              enterprise knowledge graph and a multi-agent Text2SQL pipeline.
+            </p>
+          </div>
+          <ul className="about-scroll-expand__roles" aria-label="Roles">
+            <li>Double-Degree Student</li>
+            <li>AI Researcher</li>
+            <li>AI Product Experience</li>
+          </ul>
+          <div className="about-scroll-expand__action">
+            <ContactButton />
+          </div>
         </div>
-        <div className="mt-16 sm:mt-20 md:mt-24">
-          <ContactButton />
-        </div>
-      </div>
+      </ScrollExpand>
     </section>
   );
 }
 
-function ServicesSection() {
-  return (
-    <section
-      id="services"
-      className="rounded-t-[40px] bg-white px-5 py-20 text-[#0C0C0C] sm:rounded-t-[50px] sm:px-8 sm:py-24 md:rounded-t-[60px] md:px-10 md:py-32"
-    >
-      <FadeIn y={40}>
-        <h2 className="mb-16 text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight sm:mb-20 md:mb-28">
-          Services
-        </h2>
-      </FadeIn>
-
-      <div className="mx-auto max-w-5xl border-t border-[rgba(12,12,12,0.15)]">
-        {services.map((service, index) => (
-          <FadeIn
-            key={service.number}
-            delay={index * 0.1}
-            y={36}
-            className="grid grid-cols-[minmax(84px,0.34fr)_1fr] gap-5 border-b border-[rgba(12,12,12,0.15)] py-8 sm:grid-cols-[minmax(140px,0.38fr)_1fr] sm:gap-8 sm:py-10 md:py-12"
-          >
-            <span className="text-[clamp(3rem,10vw,140px)] font-black leading-none tracking-tight">
-              {service.number}
-            </span>
-            <div className="flex flex-col justify-center gap-3 sm:gap-4">
-              <h3 className="text-[clamp(1rem,2.2vw,2.1rem)] font-medium uppercase leading-tight">
-                {service.name}
-              </h3>
-              <p className="max-w-2xl text-[clamp(0.85rem,1.6vw,1.25rem)] font-light leading-relaxed opacity-60">
-                {service.description}
-              </p>
-            </div>
-          </FadeIn>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function ProjectCard({
-  project,
-  index,
-  totalCards,
-  stackProgress,
-}: {
-  project: (typeof projects)[number];
-  index: number;
-  totalCards: number;
-  stackProgress: MotionValue<number>;
-}) {
-  const targetScale = 1 - (totalCards - 1 - index) * 0.03;
-  const scaleStep = 1 / Math.max(totalCards - 0.4, 1);
-  const scaleStart = 0.18 + index * scaleStep;
-  const scaleEnd = Math.min(scaleStart + scaleStep * 0.82, 1);
-  const scale = useTransform(
-    stackProgress,
-    [scaleStart, scaleEnd],
-    [1, targetScale],
-  );
-
-  return (
-    <motion.article
-      id={`project-${project.number}`}
-      data-project-card={project.number}
-      className="project-stack-card project-card-sticky sticky overflow-hidden rounded-[40px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-4 text-[#D7E2EA] sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8"
-      style={
-        {
-          scale,
-          zIndex: index + 1,
-          "--card-offset": `${index * 28}px`,
-        } as unknown as MotionStyle
-      }
-    >
-      <div className="mb-4 grid grid-cols-[auto_1fr] items-center gap-x-5 gap-y-2 sm:mb-6 sm:grid-cols-[auto_0.65fr_1.3fr_auto] sm:gap-6 md:mb-8 md:gap-8">
-        <span className="row-span-2 text-[clamp(3rem,8vw,116px)] font-black leading-none tracking-tight sm:row-span-1">
-          {project.number}
-        </span>
-        <p className="self-end text-xs font-light uppercase tracking-[0.24em] opacity-60 sm:self-center sm:text-sm md:text-base">
-          {project.category}
-        </p>
-        <h3 className="col-start-2 text-[clamp(1.15rem,2.5vw,2.6rem)] font-medium uppercase leading-none sm:col-auto">
-          {project.name}
-        </h3>
-        <div className="col-span-2 mt-2 sm:col-span-1 sm:mt-0 sm:justify-self-end">
-          <LiveProjectButton
-            href={project.images[2]}
-            projectName={project.name}
-          />
-        </div>
-      </div>
-
-      <div className="project-media-grid grid grid-cols-[0.4fr_0.6fr] gap-2 sm:gap-3 md:gap-4">
-        <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
-          <img
-            src={project.images[0]}
-            alt={`${project.name} project detail one`}
-            loading="lazy"
-            decoding="async"
-            className="project-image-small h-[clamp(130px,16vw,230px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
-          />
-          <img
-            src={project.images[1]}
-            alt={`${project.name} project detail two`}
-            loading="lazy"
-            decoding="async"
-            className="project-image-large h-[clamp(160px,22vw,340px)] w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
-          />
-        </div>
-        <img
-          src={project.images[2]}
-          alt={`${project.name} project main visual`}
-          loading="lazy"
-          decoding="async"
-          className="project-image-main h-full min-h-0 w-full rounded-[28px] object-cover sm:rounded-[40px] md:rounded-[50px]"
-        />
-      </div>
-    </motion.article>
-  );
-}
-
-function ProjectsSection() {
-  const stackRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: stackRef,
-    offset: ["start start", "end end"],
-  });
-
+function WorkSection() {
   return (
     <section
       id="projects"
-      className="relative z-10 -mt-10 rounded-t-[40px] bg-[#0C0C0C] px-4 pb-16 pt-20 sm:-mt-12 sm:rounded-t-[50px] sm:px-6 sm:pt-24 md:-mt-14 md:rounded-t-[60px] md:px-10 md:pb-24 md:pt-32"
+      className="work-section"
+      aria-label="Selected work"
     >
-      <FadeIn y={40}>
-        <h2 className="hero-heading mb-16 text-center text-[clamp(3rem,12vw,160px)] font-black uppercase leading-none tracking-tight sm:mb-20 md:mb-28">
-          Project
-        </h2>
-      </FadeIn>
-
-      <div
-        ref={stackRef}
-        className="project-card-stack mx-auto max-w-[1480px]"
-      >
-        {projects.map((project, index) => (
-          <ProjectCard
-            key={project.number}
-            project={project}
-            index={index}
-            totalCards={projects.length}
-            stackProgress={scrollYProgress}
-          />
-        ))}
+      <h2 className="sr-only">Work</h2>
+      <div className="work-section__stage">
+        <InfiniteMenu items={workItems} scale={1.5} />
       </div>
     </section>
   );
@@ -712,6 +396,24 @@ function ProjectsSection() {
 export default function Home() {
   const [isContactOpen, setIsContactOpen] = useState(true);
 
+  useLayoutEffect(() => {
+    if (window.location.hash) return;
+
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    const resetToTop = () => window.scrollTo(0, 0);
+    resetToTop();
+    const frame = window.requestAnimationFrame(resetToTop);
+    window.addEventListener("pageshow", resetToTop);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("pageshow", resetToTop);
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
   return (
     <main className="site-shell overflow-x-clip bg-[#0C0C0C]">
       <HeroSection
@@ -719,10 +421,10 @@ export default function Home() {
         onContactToggle={() => setIsContactOpen((current) => !current)}
         onContactClose={() => setIsContactOpen(false)}
       />
-      <MarqueeSection />
+      <ImageTrailTransition />
       <AboutSection />
-      <ServicesSection />
-      <ProjectsSection />
+      <WorkSection />
+      <ArtsSection />
     </main>
   );
 }

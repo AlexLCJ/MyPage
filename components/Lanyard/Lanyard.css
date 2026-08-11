@@ -26,6 +26,10 @@
   transform-origin: center;
 }
 
+.lanyard-profile .pc-contact-btn {
+  pointer-events: auto !important;
+}
+
 .lanyard-profile .pc-card {
   width: 350px;
   border-color: rgba(255, 255, 255, 0.24);

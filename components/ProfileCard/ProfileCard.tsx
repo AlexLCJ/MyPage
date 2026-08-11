@@ -28,6 +28,7 @@ type ProfileCardProps = {
   handle?: string;
   status?: string;
   contactText?: string;
+  contactHref?: string;
   showUserInfo?: boolean;
   onContactClick?: () => void;
 };
@@ -75,10 +76,11 @@ function ProfileCardComponent({
   mobileTiltSensitivity = 5,
   miniAvatarUrl,
   name = "Changjun Li",
-  title = "3D Creator",
+  title = "Student & AI Researcher",
   handle = "changjunli",
   status = "Available",
   contactText = "Contact",
+  contactHref,
   showUserInfo = true,
   onContactClick,
 }: ProfileCardProps) {
@@ -284,6 +286,17 @@ function ProfileCardComponent({
     [mobileTiltSensitivity, tiltEngine],
   );
 
+  const handleContactLinkClick = useCallback(
+    (event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.stopPropagation();
+      if (!contactHref?.startsWith("mailto:")) return;
+
+      event.preventDefault();
+      window.location.assign(contactHref);
+    },
+    [contactHref],
+  );
+
   useEffect(() => {
     const shell = shellRef.current;
     if (!enableTilt || !tiltEngine || !shell) return;
@@ -402,13 +415,25 @@ function ProfileCardComponent({
                       <div className="pc-status">{status}</div>
                     </div>
                   </div>
-                  <button
-                    className="pc-contact-btn"
-                    onClick={onContactClick}
-                    type="button"
-                  >
-                    {contactText}
-                  </button>
+                  {contactHref ? (
+                    <a
+                      className="pc-contact-btn"
+                      href={contactHref}
+                      onClick={handleContactLinkClick}
+                      onPointerDown={(event) => event.stopPropagation()}
+                      aria-label={`Email ${name}`}
+                    >
+                      {contactText}
+                    </a>
+                  ) : (
+                    <button
+                      className="pc-contact-btn"
+                      onClick={onContactClick}
+                      type="button"
+                    >
+                      {contactText}
+                    </button>
+                  )}
                 </div>
               ) : null}
             </div>
